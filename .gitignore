@@ -37,3 +37,18 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# Console files
+.current_dir
+
+# Ignore compiled program an .o files
+mendel
+*.o
+
+# Ignore latex files
+twoway.pdf
+twoway.tex
+
+# Ignore test files
+data.csv
+meta.csv
