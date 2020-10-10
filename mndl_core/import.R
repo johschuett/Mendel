@@ -33,26 +33,20 @@ for (.row in seq_len(nrow(plan))) {
     independend_vars[length(independend_vars) + 1] <- plan[.row, "row"]
 }
 
-# Get the survey variable types
-dependend_types <- c()
+# Get the types and rows for the independend survey variables
 independend_rows <- c()
 independend_types <- c()
-
-for (.el in dependend_vars) {
-  .row <- which(meta$name == .el)
-  dependend_types[length(dependend_types) + 1] <- meta[.row, "type/scale"]
-
-  .i <- 1 # Index for going back the rows until hitting a type
-  while (rapportools::is.empty(dependend_types[length(dependend_types)])) {
-    dependend_types[length(dependend_types)] <- meta[.row - .i, "type/scale"]
-    .i <- .i + 1
-  }
-}
 
 for (.el in independend_vars) {
   .row <- which(meta$name == .el)
   independend_rows[length(independend_rows) + 1] <- .row
   independend_types[length(independend_types) + 1] <- meta[.row, "type/scale"]
+
+  .i <- 1 # Index for going back the rows until hitting a type
+  while (rapportools::is.empty(independend_types[length(independend_types)])) {
+    independend_types[length(independend_types)] <- meta[.row - .i, "type/scale"]
+    .i <- .i + 1
+  }
 }
 
 #Set standard values for options

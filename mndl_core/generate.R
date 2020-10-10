@@ -12,7 +12,7 @@ for (.current_independend in independend_vars) {
   .c <- 1 # Index for detecting start/end of answers
   # Get answer values and labels of the current independend survey variable
   if (independend_types[.b] %in% c("F", "M")) {
-    while (meta[independend_rows[.b] + .c, "class"] == "SQ") ( .c <- c. + 1 )
+    while (meta[independend_rows[.b] + .c, "class"] == "SQ") ( .c <- .c + 1 )
     # Get all answer values and labels
     while (meta[independend_rows[.b] + .c, "class"] == "A") {
       # Save value and label
