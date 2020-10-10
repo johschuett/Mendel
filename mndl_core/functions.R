@@ -12,3 +12,35 @@ get_mode <-  function(x, na.rm = FALSE) { # Source: https://www.politikwissensch
   ux <- unique(x)
   return(ux[which.max(tabulate(match(x, ux)))])
 }
+
+write_ci <- function(dependend, independend, value) {
+  cat("CI!\n")
+}
+
+write_max <- function(dependend, independend, value) {
+  cat("MAX!\n")
+}
+
+write_mean <- function(dependend, independend, value) {
+  cat("MEAN!\n")
+}
+
+write_med <- function(dependend, independend, value) {
+  cat("MED!\n")
+}
+
+write_min <- function(dependend, independend, value) {
+  cat("MIN!\n")
+}
+
+write_mode <- function(dependend, independend, value) {
+  cat("MODE!\n")
+}
+
+write_obs <- function(dependend, independend, value) {
+  cat("OBS!\n")
+}
+
+write_sd <- function(dependend, independend, value) {
+  cat("SD!\n")
+}
