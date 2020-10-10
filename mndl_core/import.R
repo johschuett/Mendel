@@ -26,10 +26,10 @@ dependend_vars <- c()
 independend_vars <- c()
 
 for (.row in seq_len(nrow(plan))) {
-  if (!is.empty(plan[.row, 1]))
+  if (!rapportools::is.empty(plan[.row, 1]))
     dependend_vars[length(dependend_vars) + 1] <- plan[.row, 1]
 
-  if (!is.empty(plan[.row, 2]))
+  if (!rapportools::is.empty(plan[.row, 2]))
     independend_vars[length(independend_vars) + 1] <- plan[.row, 2]
 }
 
@@ -52,11 +52,19 @@ for (.el in independend_vars) {
 print(all(independend_types[1] == independend_types))
 
 # Get options
+available_options <- c("decimal_places",
+                       "decimal_places_perc",
+                       "missings",
+                       "statistical_values") # (obs, med, mean, sd, ci, min, max, mode)
+
 for (.row in seq_len(nrow(options))) {
-  assign(options[.row, 1], options[.row, 2])
+  if (options[.row, 1] %in% available_options)
+    assign(options[.row, 1], options[.row, 2])
 }
 
-# Convert missing value to integer
+# Convert option values to integers
+decimal_places <- as.integer(decimal_places)
+decimal_places_perc <- as.integer(decimal_places_perc)
 missings <- as.integer(missings)
 
 # Split string of statistical values into vector
