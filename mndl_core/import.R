@@ -40,20 +40,24 @@ independend_types <- c()
 for (.el in dependend_vars) {
   .row <- which(meta$name == .el)
   dependend_types[length(dependend_types) + 1] <- meta[.row, 3]
-}
 
-print(all(dependend_types[1] == dependend_types))
+  .i <- 1 # Index for going back the rows until hitting a type
+  while (rapportools::is.empty(dependend_types[length(dependend_types)])) {
+    dependend_types[length(dependend_types)] <- meta[.row - .i, 3]
+    .i <- .i + 1
+  }
+}
 
 for (.el in independend_vars) {
   .row <- which(meta$name == .el)
   independend_types[length(independend_types) + 1] <- meta[.row, 3]
 }
 
-print(all(independend_types[1] == independend_types))
-
 # Get options
-available_options <- c("decimal_places",
+available_options <- c("caption",
+                       "decimal_places",
                        "decimal_places_perc",
+                       "footer",
                        "missings",
                        "statistical_values") # (obs, med, mean, sd, ci, min, max, mode)
 
@@ -72,4 +76,4 @@ statistical_values <- strsplit(statistical_values, ",", fixed = TRUE)
 statistical_values <- statistical_values[[1]]
 
 # Free memory
-rm(.row, line_of_title, options)
+rm(.i, .row, line_of_title, options)
