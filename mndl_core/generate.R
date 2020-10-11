@@ -75,3 +75,7 @@ twoway_table <- paste("
   twoway_table <- paste(twoway_table, "",
   sep = "")
 #}
+
+# Free memory
+rm(.a, .b, .c, .current_dependend, .current_independend, .current_stat,
+   .current_value, answers)

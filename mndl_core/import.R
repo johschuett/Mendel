@@ -34,8 +34,23 @@ for (.row in seq_len(nrow(plan))) {
 }
 
 # Get the types and rows for the independend survey variables
+dependend_types <- c()
 independend_rows <- c()
 independend_types <- c()
+
+for (.el in dependend_vars) {
+  .row <- which(meta$name == .el)
+  dependend_types[length(dependend_types) + 1] <- meta[.row, "type/scale"]
+
+  .i <- 1 # Index for going back the rows until hitting a type
+  while (rapportools::is.empty(dependend_types[length(dependend_types)])) {
+    dependend_types[length(dependend_types)] <- meta[.row - .i, "type/scale"]
+    .i <- .i + 1
+  }
+}
+
+if (!all(dependend_types %in% c("F", "M", "L")))
+  stop("\n#! Illegal dependend variable type(s)!\n#! No output produced.")
 
 for (.el in independend_vars) {
   .row <- which(meta$name == .el)
@@ -48,6 +63,9 @@ for (.el in independend_vars) {
     .i <- .i + 1
   }
 }
+
+if (!all(independend_types %in% c("F", "M", "L")))
+  stop("\n#! Illegal independend variable type(s)!\n#! No output produced.")
 
 #Set standard values for options
 caption <- ""
@@ -82,4 +100,4 @@ statistical_values <- strsplit(statistical_values, ",", fixed = TRUE)
 statistical_values <- statistical_values[[1]]
 
 # Free memory
-rm(.i, .row, line_of_title, options)
+rm(.el, .i, .row, available_options, line_of_title, options, plan)
