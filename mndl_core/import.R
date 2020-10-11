@@ -3,8 +3,6 @@
 
 # Import data from file
 data <- import("csv/data.csv")
-# Convert missing entries to NAs
-data[data == ""] <- NA
 # Import metadata, options and the twoway table plan from files
 meta <- import("csv/meta.csv")
 options <- import("csv/options.csv")
@@ -32,6 +30,13 @@ for (.row in seq_len(nrow(plan))) {
   if (!rapportools::is.empty(plan[.row, 2]))
     independend_vars[length(independend_vars) + 1] <- plan[.row, "row"]
 }
+
+# Create new dataset containing only the dependend and independend survey variables
+data <- data[, c(dependend_vars, independend_vars)]
+# Convert missing entries to NAs
+data[data == ""] <- NA
+# Clean the data from non-numerical entries
+data[] <- lapply(data, function(x) as.numeric(as.character(x)))
 
 # Get the types and rows for the independend survey variables
 dependend_types <- c()

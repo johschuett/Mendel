@@ -1,7 +1,7 @@
 option	value
 caption	This is my caption for this twoway table
-ci_level	0.975
+ci_level	0.95
 decimal_places	2
 decimal_places_perc	0
 footer	This is my footer for this twoway table
-statistical_values	obs,med,mean,ci
+statistical_values	max,mean,med,ci
