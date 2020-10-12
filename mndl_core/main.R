@@ -16,8 +16,16 @@ library(rapportools, warn.conflicts = FALSE)  # Version 1.0
 library(rio, warn.conflicts = FALSE)          # Version 0.5.16
 library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 
-# Define %!in% operator
-'%!in%' <- function(x, y)!('%in%'(x, y))
+# Set standard values for options
+caption             <- ""
+ci_level            <- 0.05
+decimal_places      <- 2
+decimal_places_perc <- 0
+footer              <- ""
+statistical_values  <- c("obs", "med", "mean", "sd")
+
+# Available statistical values
+# obs, med, mean, sd, ci, min, max, mode
 
 cat("\n#! Generating TEX file \U0001F529 ...\n\n")
 
@@ -25,4 +33,4 @@ cat("\n#! Generating TEX file \U0001F529 ...\n\n")
 source("mndl_core/import.R")
 source("mndl_core/functions.R")
 source("mndl_core/generate.R")
-source("mndl_core/write_output.R")
+#source("mndl_core/write_output.R")

@@ -5,7 +5,7 @@
 get_absolute_freq <- function(var, value) (as.numeric(count(dplyr::filter(data, eval(parse(text = var)) == value))))
 
 # Gets the mode
-get_mode <-  function(x, na.rm = FALSE) { # Source: https://www.politikwissenschaften.ch/pdf.php?id=11
+get_mode <-  function(x, na.rm = TRUE) { # Source: https://www.politikwissenschaften.ch/pdf.php?id=11
   if (na.rm) {
     x <- na.omit(x)
   }
@@ -13,8 +13,8 @@ get_mode <-  function(x, na.rm = FALSE) { # Source: https://www.politikwissensch
   return(ux[which.max(tabulate(match(x, ux)))])
 }
 
+# Filter and subset the dataset
 get_subset <- function(dependend, independend, value) {
-  # Filter and subset the dataset
   .com <- paste("numbers <- dplyr::filter(data, ", independend, " == ", value, ")", sep = "")
   eval(parse(text = .com))
 
@@ -24,34 +24,42 @@ get_subset <- function(dependend, independend, value) {
   return(numbers)
 }
 
+## STATISTICS ##
+
+# Confidence interval
 write_ci <- function(dependend, independend, value) {
+  # Get data
   numbers <- get_subset(dependend, independend, value)
 
-  a <- mean(numbers)
-  s <- sd(numbers)
-  n <- length(numbers)
+  # Get required values for calculating the CI
+  mean_value <- mean(numbers, na.rm = TRUE)
+  sd_value <- stats::sd(numbers, na.rm = TRUE)
+  obs_value <- length(numbers[!is.na(numbers)])
 
-  error <- qnorm(ci_level)*s/sqrt(n)
-  left <- a - error
-  right <- a + error
+  # Calculate the error bound
+  error_value <- stats::qt(1 - ci_level / 2, df = obs_value - 1) * sd_value / sqrt(obs_value)
 
-  # Check if result is a real number. If not, create a "-" in LaTeX code
+  # Calculate the margins
+  left <- mean_value - error_value
+  right <- mean_value + error_value
+
+  # Check if results are real numbers. If not, write "[ - ; - ]" in LaTeX code
   if (!is.infinite(c(left, right)) && !is.na(c(left, right)) && !is.nan(c(left, right)))
     chunk <- paste(" & [ ", format(round(left, decimal_places), nsmall = decimal_places), " ; ",
                   format(round(right, decimal_places), nsmall = decimal_places), " ]", sep = "")
   else
-    chunk <- "[ - ; - ]"
+    chunk <- " & [ - ; - ]"
 
-  cat(paste("CI:", chunk, "\n"))
   return(chunk)
 }
 
+# Maxima
 write_max <- function(dependend, independend, value) {
   # Get data
   numbers <- get_subset(dependend, independend, value)
 
   # Calculate the max
-  result <- max(numbers)
+  result <- max(numbers, na.rm = TRUE)
 
   # Check if result is a real number. If not, create a "-" in LaTeX code
   if (!is.infinite(result) && !is.na(result) && !is.nan(result))
@@ -59,7 +67,6 @@ write_max <- function(dependend, independend, value) {
   else
     chunk <- " & -"
 
-  cat(paste("Max:", chunk, "\n"))
   return(chunk)
 }
 
@@ -68,7 +75,7 @@ write_mean <- function(dependend, independend, value) {
   numbers <- get_subset(dependend, independend, value)
 
   # Calculate the mean
-  result <- mean(numbers)
+  result <- mean(numbers, na.rm = TRUE)
 
   # Check if result is a real number. If not, create a "-" in LaTeX code
   if (!is.infinite(result) && !is.na(result) && !is.nan(result))
@@ -76,10 +83,10 @@ write_mean <- function(dependend, independend, value) {
   else
     chunk <- " & -"
 
-  cat(paste("Mean:", chunk, "\n"))
   return(chunk)
 }
 
+# Median
 write_med <- function(dependend, independend, value) {
   # Get data
   numbers <- get_subset(dependend, independend, value)
@@ -93,16 +100,16 @@ write_med <- function(dependend, independend, value) {
   else
     chunk <- " & -"
 
-  cat(paste("Median:", chunk, "\n"))
   return(chunk)
 }
 
+# Minima
 write_min <- function(dependend, independend, value) {
   # Get data
   numbers <- get_subset(dependend, independend, value)
 
   # Calculate the mean
-  result <- min(numbers)
+  result <- min(numbers, na.rm = TRUE)
 
   # Check if result is a real number. If not, create a "-" in LaTeX code
   if (!is.infinite(result) && !is.na(result) && !is.nan(result))
@@ -110,18 +117,68 @@ write_min <- function(dependend, independend, value) {
   else
     chunk <- " & -"
 
-  cat(paste("Min:", chunk, "\n"))
   return(chunk)
 }
 
+# Mode
 write_mode <- function(dependend, independend, value) {
-  cat("MODE!\n")
+  # Get data
+  numbers <- get_subset(dependend, independend, value)
+
+  # Calculate the mode
+  result <- get_mode(numbers)
+
+  # Check if result is a real number. If not, create a "-" in LaTeX code
+  if (!is.infinite(result) && !is.na(result) && !is.nan(result))
+    chunk <- paste(" & ", format(round(result, decimal_places), nsmall = decimal_places), sep = "")
+  else
+    chunk <- " & -"
+
+  return(chunk)
 }
 
+# Observations
 write_obs <- function(dependend, independend, value) {
-  cat("OBS!\n")
+  # Get data
+  numbers <- get_subset(dependend, independend, value)
+
+  # Count observations
+  result <- length(numbers[!is.na(numbers)])
+
+  # Create LaTeX code
+  chunk <- paste(" & ", format(result, nsmall = decimal_places), sep = "")
+
+  return(chunk)
 }
 
+# Percentage
+write_perc <- function(dependend, independend, value) {
+  # Get data
+  numbers <- get_subset(dependend, independend, value)
+
+  # Count observations
+  result <- length(numbers[!is.na(numbers)]) / nrow(data)
+
+  # Create LaTeX code
+  chunk <- paste(" & ", format(round(result, decimal_places), nsmall = decimal_places), sep = "")
+
+  return(chunk)
+
+}
+
+# Standard deviation
 write_sd <- function(dependend, independend, value) {
-  cat("SD!\n")
+  # Get data
+  numbers <- get_subset(dependend, independend, value)
+
+  # Calculate the standard deviation
+  result <- stats::sd(numbers, na.rm = TRUE)
+
+  # Check if result is a real number. If not, create a "-" in LaTeX code
+  if (!is.infinite(result) && !is.na(result) && !is.nan(result))
+    chunk <- paste(" & ", format(round(result, decimal_places), nsmall = decimal_places), sep = "")
+  else
+    chunk <- " & -"
+
+  return(chunk)
 }
