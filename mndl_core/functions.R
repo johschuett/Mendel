@@ -1,9 +1,6 @@
 # functions.R
 # This script contains functions used by generate.R
 
-# Gets the absolute frequency
-get_absolute_freq <- function(var, value) (as.numeric(count(dplyr::filter(data, eval(parse(text = var)) == value))))
-
 # Gets the mode
 get_mode <-  function(x, na.rm = TRUE) { # Source: https://www.politikwissenschaften.ch/pdf.php?id=11
   if (na.rm) {
@@ -26,7 +23,7 @@ get_subset <- function(dependend, independend, value) {
 
 ## STATISTICS ##
 
-# Confidence interval
+# Confidence interval (t-distribution)
 write_ci <- function(dependend, independend, value) {
   # Get data
   numbers <- get_subset(dependend, independend, value)
@@ -46,7 +43,7 @@ write_ci <- function(dependend, independend, value) {
   # Check if results are real numbers. If not, write "[ - ; - ]" in LaTeX code
   if (!is.infinite(c(left, right)) && !is.na(c(left, right)) && !is.nan(c(left, right)))
     chunk <- paste(" & [ ", format(round(left, decimal_places), nsmall = decimal_places), " ; ",
-                  format(round(right, decimal_places), nsmall = decimal_places), " ]", sep = "")
+                   format(round(right, decimal_places), nsmall = decimal_places), " ]", sep = "")
   else
     chunk <- " & [ - ; - ]"
 

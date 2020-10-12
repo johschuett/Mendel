@@ -16,16 +16,17 @@ library(rapportools, warn.conflicts = FALSE)  # Version 1.0
 library(rio, warn.conflicts = FALSE)          # Version 0.5.16
 library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 
-# Set standard values for options
+#----------------------------- Set standard values for options
+#
 caption             <- ""
 ci_level            <- 0.05
 decimal_places      <- 2
 decimal_places_perc <- 0
 footer              <- ""
 statistical_values  <- c("obs", "med", "mean", "sd")
-
-# Available statistical values
+# Available statistical values:
 # obs, med, mean, sd, ci, min, max, mode
+#-------------------------------------------------------------
 
 cat("\n#! Generating TEX file \U0001F529 ...\n\n")
 

@@ -61,7 +61,7 @@ for (.el in dependend_vars) {
     .i <- .i + 1
   }
   # Custom label for matrix and multiple choice survey variables (Q-label: SQ-label)
-  if (!is.empty(.mat_multi_label)) {
+  if (!rapportools::is.empty(.mat_multi_label)) {
     independend_labels[length(independend_labels)] <- paste(independend_labels[length(independend_labels)],
                                                             ": ", .mat_multi_label, sep = "")
   }
@@ -85,8 +85,10 @@ for (.el in independend_vars) {
     .i <- .i + 1
   }
   # Custom label for matrix and multiple choice survey variables (Q-label: SQ-label)
-  if (!is.empty(.mat_multi_label)) {
-    dependend_labels[length(dependend_labels)] <- paste(.mat_multi_label, ": ", dependend_labels[length(dependend_labels)], sep = "")
+  if (!rapportools::is.empty(.mat_multi_label)) {
+    dependend_labels[length(dependend_labels)] <- paste(.mat_multi_label, ": ",
+                                                        dependend_labels[length(dependend_labels)],
+                                                        sep = "")
   }
   # Clear the variable
   .mat_multi_label <- ""
@@ -154,9 +156,10 @@ if ("options" %in% ls()) {
   statistical_values <- tolower(gsub(" ", "", statistical_values))
   statistical_values <- strsplit(statistical_values, ",", fixed = TRUE)
   statistical_values <- statistical_values[[1]]
+
+  # Free memory
+  rm(available_options, options)
 }
 
 # Free memory
-rm(.el, .i, .row, line_of_title, plan)
-# Remove option variables if they exist
-if ("options" %in% ls()) (rm(available_options, options))
+rm(.el, .i, .mat_multi_label, .row, line_of_title, plan)
