@@ -108,9 +108,18 @@ headstructure <- paste(headstructure, "\\\\\n\t\\midrule", sep = "")
 tablefirsthead <- paste(tablefirsthead, headstructure, "\n}\n\n", sep = "")
 tablehead <- paste(tablehead, headstructure, "\n}\n\n", sep = "")
 
-# Create column types
+# Create column types; calculate width for answer label column
+# based on the longest string * 1.6mm
+answer_collection <- c()
+
+for (.answers in answer_list)
+  for (.current_answer in .answers$label)
+    answer_collection[length(answer_collection) + 1] <- .current_answer
+
+longest_string <- max(nchar(c(answer_collection, independend_labels)))
+
 xtab_columns <- paste(replicate(columns - 1, "r"), sep = "", collapse = "")
-xtab_columns <- paste("l", xtab_columns, sep = "")
+xtab_columns <- paste("p{", round(longest_string * 1.6, 2), "mm}", xtab_columns, sep = "") # Alternative: l
 
 # Assemble twoway table
 twoway_table <- paste("
@@ -119,7 +128,7 @@ twoway_table <- paste("
 ", tablefirsthead, tablehead, "
 \\tabletail {
 \t\\bottomrule
-\t\\multicolumn{", columns, "}{r}{\\footnotesize \\emph{Continues on next page}} \\\\
+\t\\multicolumn{", columns, "}{r}{\\footnotesize \\emph{Continued on next page}} \\\\
 }
 
 \\tablecaption{", caption, "}

@@ -3,6 +3,8 @@
 
 preamble <- paste("\\documentclass[10pt, twoside]{article}
 
+% You can try the 'landscape' option for the documentclass if your table is too wide.
+
 \\usepackage[T1]{fontenc}
 \\usepackage[utf8]{inputenc}
 \\usepackage[english]{babel}
@@ -27,7 +29,7 @@ write(preamble, file = "twoway.tex", append = FALSE)
 # Write code
 write(twoway_table, file = "twoway.tex", append = TRUE)
 
-write("\\end{document}", file = "twoway.tex", append = TRUE)
+write("\\end{document}\n\n% This document was generated using Mendel.", file = "twoway.tex", append = TRUE)
 
 cat("\n#! Building PDF file \U0001F9F1 ...\n\n")
 
