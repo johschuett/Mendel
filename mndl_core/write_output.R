@@ -9,7 +9,7 @@ preamble <- paste("\\documentclass[10pt, twoside]{article}
 \\usepackage{array}
 \\usepackage{booktabs}
 \\usepackage{float}
-\\usepackage[left = .5in, right = .5in, top = 1in, bottom = 1in]{geometry}
+\\usepackage[left = .2in, right = .2in, top = 1in, bottom = 1in]{geometry}
 \\usepackage{multirow}
 \\usepackage{xtab}
 
@@ -31,5 +31,5 @@ write("\\end{document}", file = "twoway.tex", append = TRUE)
 
 cat("\n#! Building PDF file \U0001F9F1 ...\n\n")
 
-#system("pdflatex twoway.tex")
-#system("rm *.aux *log")
+system("pdflatex twoway.tex")
+system("rm *.aux *log")

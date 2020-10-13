@@ -45,7 +45,7 @@ write_ci <- function(dependend, independend, value) {
     chunk <- paste(" & [ ", format(round(left, decimal_places), nsmall = decimal_places), " ; ",
                    format(round(right, decimal_places), nsmall = decimal_places), " ]", sep = "")
   else
-    chunk <- " & [ - ; - ]"
+    chunk <- " & [\\parbox{.86cm}{\\centering -};\\parbox{.86cm}{\\centering -}]"
 
   return(chunk)
 }
