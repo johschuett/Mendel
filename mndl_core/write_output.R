@@ -8,14 +8,12 @@ preamble <- paste("\\documentclass[10pt, twoside]{article}
 \\usepackage[english]{babel}
 \\usepackage{array}
 \\usepackage{booktabs}
-\\usepackage{dcolumn}
 \\usepackage{float}
 \\usepackage[left = .5in, right = .5in, top = 1in, bottom = 1in]{geometry}
 \\usepackage{multirow}
 \\usepackage{xtab}
 
 \\newcommand{\\mc}[1]{\\multicolumn{1}{c}{#1}}
-\\newcolumntype{.}[1]{D{.}{.}{#1}}
 
 \\begin{document}
 
@@ -33,5 +31,5 @@ write("\\end{document}", file = "twoway.tex", append = TRUE)
 
 cat("\n#! Building PDF file \U0001F9F1 ...\n\n")
 
-system("pdflatex twoway.tex")
-system("rm *.aux *log")
+#system("pdflatex twoway.tex")
+#system("rm *.aux *log")

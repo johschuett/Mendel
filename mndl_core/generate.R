@@ -18,7 +18,7 @@ for (.current_independend in independend_vars) {
     .current_ind_label <- independend_labels[.b]
 
   # String for LaTeX code of the current section of the twoway table; write Q/SQ label
-  pack <- paste("\\multirow[l]{", columns, "}{", .current_ind_label, "}\n", sep = "")
+  pack <- paste("\t\\multirow[t]{", columns, "}{*}{", .current_ind_label, "} \\\\\n", sep = "")
   # Iterate through the answer values of the current independend survey variable
   for (.current_value in answer_list[[.b]]$value) {
     # If there is no label for the current answer value,
@@ -28,7 +28,7 @@ for (.current_independend in independend_vars) {
     else
       .current_v_label <- (dplyr::filter(answer_list[[.b]], value == .current_value))$label
     # Write answer label
-    pack <- paste(pack, .current_v_label, sep = "")
+    pack <- paste(pack, "\t\\hskip5mm ", .current_v_label, sep = "")
     .current_value <- as.numeric(.current_value)
     .a <- 1 # Counter for the dependend survey variables
     # Iterate through the dependend survey variables
@@ -54,16 +54,84 @@ for (.current_independend in independend_vars) {
   }
   # Add space between sections
   if (.b < length(independend_vars))
-    pack <- paste(pack, "\n\\addlinespace[.5cm]\n\n", sep = "")
+    pack <- paste(pack, "\t[\\normalbaselineskip]\n\n", sep = "")
   # Code of this section is complete
   sections[length(sections) + 1] <- pack
   .b <- .b + 1
 }
 
+## LaTeX
+# Create tablefirshead and tablehead
+tablefirsthead <- "\\tablefirsthead {\n"
+tablehead <- "\\tablehead {\n"
+headstructure <- "\t\\toprule\n\t"
+stat_labels <- c()
+
+# Get labels for statistical values
+for (.current_stat in statistical_values) {
+  switch (.current_stat,
+          ci   = stat_labels[length(stat_labels) + 1] <- "CI (95 \\%)", # Needs to be variable!!
+          max  = stat_labels[length(stat_labels) + 1] <- "Max",
+          mean = stat_labels[length(stat_labels) + 1] <- "Mean",
+          med  = stat_labels[length(stat_labels) + 1] <- "Median",
+          min  = stat_labels[length(stat_labels) + 1] <- "Min",
+          mode = stat_labels[length(stat_labels) + 1] <- "Mode",
+          obs  = stat_labels[length(stat_labels) + 1] <- "Obs",
+          perc = stat_labels[length(stat_labels) + 1] <- "\\%",
+          sd   = stat_labels[length(stat_labels) + 1] <- "St. Dev."
+  )
+}
+
+# Building headstructure
+for (.current_d_label in dependend_labels) {
+  for (.current_s_label in stat_labels) {
+    # Insert label for current statistical value
+    headstructure <- paste(headstructure, " & \\mc{", .current_s_label, "} ", sep = "")
+  }
+}
+
+# End row
+headstructure <- paste(headstructure, "\\\\\n\t\\midrule", sep = "")
+
+# Assemble tablefirshead and tablehead
+tablefirsthead <- paste(tablefirsthead, headstructure, "\n}\n\n", sep = "")
+tablehead <- paste(tablehead, headstructure, "\n}\n\n", sep = "")
+
+# Create column types
+xtab_columns <- paste(replicate(columns - 1, "r"), sep = "", collapse = "")
+xtab_columns <- paste("l", xtab_columns, sep = "")
 
 # Assemble twoway table
 twoway_table <- paste("
-\\topcaption{", caption, "} \\label{tab:twoway}
+%----------------------------------------------------------- twoway table preamble
+
+", tablefirsthead, tablehead, "
+\\tabletail {
+\t\\bottomrule
+\t\\multicolumn{", columns, "}{r}{\\footnotesize \\emph{Continues on next page}} \\\\
+}
+
+\\tablecaption{", caption, "}
+
+%-------------------------------------------------------------------------------
+
+\\begin{xtabular}{", xtab_columns, "}
+
+", sep = "")
+
+for (.section in sections)
+  twoway_table <- paste(twoway_table, .section, sep = "")
+
+twoway_table <- paste(twoway_table,"
+\t\\bottomrule
+
+\\end{xtabular}
+
+\\vspace{.5em}
+\\footnotesize
+", footer,
+"
+\\normalsize
 ", sep = "")
 
 # Free memory

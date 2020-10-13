@@ -46,9 +46,6 @@ independend_labels <- c()
 independend_rows <- c()
 independend_types <- c()
 
-# Variable to save Label of matrix and multiple choice questions
-.mat_multi_label <- ""
-
 for (.el in dependend_vars) {
   .row <- which(meta$name == .el)
   dependend_labels[length(dependend_labels) + 1] <- meta[.row, "text"]
@@ -56,17 +53,19 @@ for (.el in dependend_vars) {
 
   .i <- 1 # Index for going back the rows until hitting a type
   while (rapportools::is.empty(dependend_types[length(dependend_types)])) {
-    .mat_multi_label <- meta[.row - .i, "text"]
     dependend_types[length(dependend_types)] <- meta[.row - .i, "type/scale"]
     .i <- .i + 1
   }
   # Custom label for matrix and multiple choice survey variables (Q-label: SQ-label)
-  if (!rapportools::is.empty(.mat_multi_label)) {
-    independend_labels[length(independend_labels)] <- paste(independend_labels[length(independend_labels)],
-                                                            ": ", .mat_multi_label, sep = "")
+  if (dependend_types[length(dependend_types)] %in% c("F", "M")) {
+    .current_row <- .row
+    .current_class = meta[.current_row, "class"]
+    while (.current_class != "Q") {
+      .current_row <- .current_row - 1
+      .current_class <- meta[.current_row, "class"]
+    }
+    dependend_labels[length(dependend_labels)] <- paste(meta[.current_row, "text"], ": ", dependend_labels[length(dependend_labels)], sep = "")
   }
-  # Clear the variable
-  .mat_multi_label <- ""
 }
 
 if (!all(dependend_types %in% c("F", "L", "M", "N")))
@@ -85,13 +84,15 @@ for (.el in independend_vars) {
     .i <- .i + 1
   }
   # Custom label for matrix and multiple choice survey variables (Q-label: SQ-label)
-  if (!rapportools::is.empty(.mat_multi_label)) {
-    dependend_labels[length(dependend_labels)] <- paste(.mat_multi_label, ": ",
-                                                        dependend_labels[length(dependend_labels)],
-                                                        sep = "")
+  if (independend_types[length(independend_types)] %in% c("F", "M")) {
+    .current_row <- .row
+    .current_class = meta[.current_row, "class"]
+    while (.current_class != "Q") {
+      .current_row <- .current_row - 1
+      .current_class <- meta[.current_row, "class"]
+    }
+    independend_labels[length(independend_labels)] <- paste(meta[.current_row, "text"], ": ", independend_labels[length(independend_labels)], sep = "")
   }
-  # Clear the variable
-  .mat_multi_label <- ""
 }
 
 if (!all(independend_types %in% c("F", "L", "M")))
@@ -162,4 +163,4 @@ if ("options" %in% ls()) {
 }
 
 # Free memory
-rm(.el, .i, .mat_multi_label, .row, line_of_title, plan)
+rm(.el, .i, .row, line_of_title, plan)

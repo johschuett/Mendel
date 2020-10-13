@@ -52,3 +52,8 @@ twoway.tex
 # Ignore test files
 data.csv
 meta.csv
+
+# LaTeX files
+*.aux
+*.log
+*.synctex.gz
