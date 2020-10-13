@@ -70,13 +70,13 @@ stat_labels <- c()
 # Get labels for statistical values
 for (.current_stat in statistical_values) {
   switch (.current_stat,
-          ci   = stat_labels[length(stat_labels) + 1] <- "CI (95 \\%)", # Needs to be variable!!
-          max  = stat_labels[length(stat_labels) + 1] <- "Max",
+          ci   = stat_labels[length(stat_labels) + 1] <- paste("CI (", (1 - ci_level) * 100, "\\%)", sep = ""),
+          max  = stat_labels[length(stat_labels) + 1] <- "Max.",
           mean = stat_labels[length(stat_labels) + 1] <- "Mean",
           med  = stat_labels[length(stat_labels) + 1] <- "Median",
-          min  = stat_labels[length(stat_labels) + 1] <- "Min",
+          min  = stat_labels[length(stat_labels) + 1] <- "Min.",
           mode = stat_labels[length(stat_labels) + 1] <- "Mode",
-          obs  = stat_labels[length(stat_labels) + 1] <- "Obs",
+          obs  = stat_labels[length(stat_labels) + 1] <- "Obs.",
           perc = stat_labels[length(stat_labels) + 1] <- "\\%",
           sd   = stat_labels[length(stat_labels) + 1] <- "St. Dev."
   )
@@ -84,6 +84,17 @@ for (.current_stat in statistical_values) {
 
 # Building headstructure
 for (.current_d_label in dependend_labels) {
+  # Insert label for current dependend survey variable
+  headstructure <- paste(headstructure, " & \\multicolumn{", (columns - 1) / length(dependend_labels), "}{c}{", .current_d_label, "}", sep = "")
+}
+
+# End row and creat cmidrule
+headstructure <- paste(headstructure, " \\\\\n\t\\cmidrule(l{2mm}r{2mm}){2-", columns, "}", sep = "")
+
+# New line
+headstructure <- paste(headstructure, " \n\t", sep = "")
+
+for (.current_d_label in dependend_labels) { # This for loop is not optimal
   for (.current_s_label in stat_labels) {
     # Insert label for current statistical value
     headstructure <- paste(headstructure, " & \\mc{", .current_s_label, "} ", sep = "")

@@ -4,4 +4,4 @@ ci_level	0.05
 decimal_places	2
 decimal_places_perc	0
 footer	This is my footer for this twoway table
-statistical_values	obs,med,mean,sd
+statistical_values	obs,perc,ci
