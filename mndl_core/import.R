@@ -34,8 +34,8 @@ for (.row in seq_len(nrow(plan))) {
 
 # Create new dataset containing only the dependend and independend survey variables
 data <- data[, unique(c(dependend_vars, independend_vars))]
-# Convert missing entries to NAs
-data[data == ""] <- NA
+# Convert empty entries to NAs
+data[rapportools::is.empty(data)] <- NA
 # Clean the data from non-numerical entries
 data[] <- lapply(data, function(x) as.numeric(as.character(x)))
 
