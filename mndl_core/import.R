@@ -2,12 +2,12 @@
 # This script imports the data from the CSV files and sorts them
 
 # Import data from file
-data <- import("csv/data.csv")
+data <- import("input/data.csv")
 # Import metadata and the twoway table plan from files
-meta <- import("csv/meta.csv")
-plan <- import("csv/plan.csv")
+meta <- import("input/meta.csv")
+plan <- import("input/plan.csv")
 # Import options file if it exists
-if (file.exists("csv/options.csv")) (options <- import("csv/options.csv"))
+if (file.exists("input/options.csv")) (options <- import("input/options.csv"))
 
 # Get survey title
 line_of_title <- which(meta$name == "surveyls_title")

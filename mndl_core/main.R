@@ -16,7 +16,9 @@ library(rapportools, warn.conflicts = FALSE)  # Version 1.0
 library(rio, warn.conflicts = FALSE)          # Version 0.5.16
 library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 
-table_type <- "means"
+# Get the table type ("means" or "percentages")
+table_type <- readChar("input/type.txt", file.info("input/type.txt")$size)
+table_type <- tolower(gsub(" ", "", table_type))
 
 if (table_type == "means") {
 
@@ -60,5 +62,9 @@ if (table_type == "means") {
   #source("mndl_core/percentages/functions.R")
   #source("mndl_core/percentages/generate.R")
   #source("mndl_core/percentages/write_output.R")
+
+} else {
+
+  cat("#! Unknown table type!")
 
 }
