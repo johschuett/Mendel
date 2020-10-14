@@ -154,7 +154,7 @@ headstructure <- paste(headstructure, " \\\\\n\t\t\\midrule", sep = "")
 
 # Assemble tablefirsthead and tablehead
 tablefirsthead <- paste(tablefirsthead, headstructure, "\n\t}\n\n", sep = "")
-tablehead <- paste(tablehead, headstructure, "\n\t}\n\n", sep = "")
+tablehead <- paste(tablehead, headstructure, "\n\t}\n", sep = "")
 
 # Create column types; calculate width for answer label column
 # based on the longest string * 1.6mm
@@ -179,6 +179,11 @@ twoway_table <- paste("
 \t\t\\multicolumn{", columns, "}{r}{\\footnotesize \\emph{Continued on next page}} \\\\
 \t}
 
+\t\\tablelasttail {
+\t\t\\bottomrule
+\t\t\\multicolumn{", columns, "}{l}{\\footnotesize \\emph{", footer, "}} \\\\
+\t}
+
 \t\\tablecaption{", caption, "}
 
 \t%-------------------------------------------------------------------------------
@@ -192,12 +197,7 @@ twoway_table <- paste("
 for (.section in sections)
   twoway_table <- paste(twoway_table, .section, sep = "")
 
-twoway_table <- paste(twoway_table,"
-\t\t\t\\bottomrule \\\\
-\t\t\t\\footnotesize ", footer, " \\normalsize \\\\
-
-\t\t\\end{xtabular}
-", sep = "")
+twoway_table <- paste(twoway_table,"\n\t\t\\end{xtabular}\n", sep = "")
 
 # Free memory
 rm(.a, .answers, .b, .c, .current_answer, .current_dependend, .current_d_label,

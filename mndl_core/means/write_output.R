@@ -22,8 +22,7 @@ preamble <- paste("\\documentclass[10pt, twoside]{article}
 \t\\title{", survey_title, "}
 \t\\date{}
 
-\t%\\maketitle
-", sep = "")
+\t%\\maketitle", sep = "")
 
 write(preamble, file = "twoway.tex", append = FALSE)
 
