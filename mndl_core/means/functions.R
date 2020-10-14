@@ -1,4 +1,4 @@
-# functions.R
+# functions.R - means
 # This script contains functions used by generate.R
 
 # Gets the mode

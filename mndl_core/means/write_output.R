@@ -1,4 +1,4 @@
-# write_output.R
+# write_output.R - means
 # This script writes the LaTeX code into a TEX file
 
 preamble <- paste("\\documentclass[10pt, twoside]{article}

@@ -1,4 +1,4 @@
-# generate.R
+# generate.R - means
 # This script generates the LaTeX code for the twoway table
 
 # Amount of columns of the twoway table

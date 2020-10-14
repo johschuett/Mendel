@@ -16,22 +16,49 @@ library(rapportools, warn.conflicts = FALSE)  # Version 1.0
 library(rio, warn.conflicts = FALSE)          # Version 0.5.16
 library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 
-#----------------------------- Set standard values for options
-#
-caption             <- ""
-ci_level            <- 0.05
-decimal_places      <- 2
-decimal_places_perc <- 0
-footer              <- ""
-statistical_values  <- c("obs", "med", "mean", "sd")
-# Available statistical values:
-# obs, med, mean, sd, ci, min, max, mode
-#-------------------------------------------------------------
+table_type <- "means"
 
-cat("\n#! Generating TEX file \U0001F529 ...\n\n")
+if (table_type == "means") {
 
-# Scripts
-source("mndl_core/import.R")
-source("mndl_core/functions.R")
-source("mndl_core/generate.R")
-source("mndl_core/write_output.R")
+  #----------------------------- Set standard values for options
+  #
+  caption             <- ""
+  ci_level            <- 0.05
+  decimal_places      <- 2
+  decimal_places_perc <- 0
+  footer              <- ""
+  statistical_values  <- c("obs", "med", "mean", "sd")
+  # Available statistical values:
+  # obs, med, mean, sd, ci, min, max, mode
+  #-------------------------------------------------------------
+
+  cat("\n#! Generating TEX file \U0001F529 ...\n\n")
+
+  # Scripts
+  source("mndl_core/import.R")
+  source("mndl_core/means/options.R")
+  source("mndl_core/means/functions.R")
+  source("mndl_core/means/generate.R")
+  source("mndl_core/means/write_output.R")
+
+} else if (table_type == "percentages") {
+
+  #----------------------------- Set standard values for options
+  #
+  caption             <- ""
+  decimal_places      <- 2
+  decimal_places_perc <- 0
+  footer              <- ""
+  #
+  #-------------------------------------------------------------
+
+  cat("\n#! Generating TEX file \U0001F529 ...\n\n")
+
+  # Scripts
+  source("mndl_core/import.R")
+  source("mndl_core/percentages/options.R")
+  #source("mndl_core/percentages/functions.R")
+  #source("mndl_core/percentages/generate.R")
+  #source("mndl_core/percentages/write_output.R")
+
+}
