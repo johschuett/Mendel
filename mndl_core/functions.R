@@ -153,11 +153,22 @@ write_perc <- function(dependend, independend, value) {
   # Get data
   numbers <- get_subset(dependend, independend, value)
 
+  # Get all answer values
+  .index <- which(independend_vars == independend)[[1]]
+  current_values <- answer_list[[.index]]$value
+
+  # Get the amount of observations
+  .com <- paste("obs_value <- filter(data, !is.na(", dependend, ") & ", independend, " %in% current_values)", sep = "")
+  eval(parse(text = .com))
+
+  .com <- paste("obs_value <- length(obs_value$", dependend,")", sep = "")
+  eval(parse(text = .com))
+
   # Count observations
-  result <- length(numbers[!is.na(numbers)]) / nrow(data)
+  result <- length(numbers[!is.na(numbers)]) / obs_value * 100
 
   # Create LaTeX code
-  chunk <- paste(" & ", format(round(result, decimal_places), nsmall = decimal_places), sep = "")
+  chunk <- paste(" & ", format(round(result, decimal_places_perc), nsmall = decimal_places_perc), sep = "")
 
   return(chunk)
 

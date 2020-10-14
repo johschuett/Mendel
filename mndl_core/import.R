@@ -25,11 +25,11 @@ dependend_vars <- c()
 independend_vars <- c()
 
 for (.row in seq_len(nrow(plan))) {
-  if (!rapportools::is.empty(plan[.row, "col"]))
-    dependend_vars[length(dependend_vars) + 1] <- plan[.row, "col"]
+  if (!rapportools::is.empty(plan[.row, "dependend"]))
+    dependend_vars[length(dependend_vars) + 1] <- plan[.row, "dependend"]
 
   if (!rapportools::is.empty(plan[.row, 2]))
-    independend_vars[length(independend_vars) + 1] <- plan[.row, "row"]
+    independend_vars[length(independend_vars) + 1] <- plan[.row, "independend"]
 }
 
 # Create new dataset containing only the dependend and independend survey variables
@@ -79,7 +79,6 @@ for (.el in independend_vars) {
 
   .i <- 1 # Index for going back the rows until hitting a type
   while (rapportools::is.empty(independend_types[length(independend_types)])) {
-    .mat_multi_label <- meta[.row - .i, "text"]
     independend_types[length(independend_types)] <- meta[.row - .i, "type/scale"]
     .i <- .i + 1
   }
@@ -163,4 +162,4 @@ if ("options" %in% ls()) {
 }
 
 # Free memory
-rm(.el, .i, .row, line_of_title, plan)
+rm(.current_class, .current_row, .el, .i, .row, line_of_title, plan)

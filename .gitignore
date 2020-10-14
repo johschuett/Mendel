@@ -51,6 +51,7 @@ twoway.tex
 
 # Ignore test files
 data.csv
+data_150.csv
 meta.csv
 
 # LaTeX files

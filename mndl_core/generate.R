@@ -61,7 +61,7 @@ for (.current_independend in independend_vars) {
 }
 
 ## LaTeX
-# Create tablefirshead and tablehead
+# Create tablefirsthead and tablehead
 tablefirsthead <- "\\tablefirsthead {\n"
 tablehead <- "\\tablehead {\n"
 headstructure <- "\t\\toprule\n\t"
@@ -104,7 +104,7 @@ for (.current_d_label in dependend_labels) { # This for loop is not optimal
 # End row
 headstructure <- paste(headstructure, "\\\\\n\t\\midrule", sep = "")
 
-# Assemble tablefirshead and tablehead
+# Assemble tablefirsthead and tablehead
 tablefirsthead <- paste(tablefirsthead, headstructure, "\n}\n\n", sep = "")
 tablehead <- paste(tablehead, headstructure, "\n}\n\n", sep = "")
 
@@ -155,5 +155,8 @@ twoway_table <- paste(twoway_table,"
 ", sep = "")
 
 # Free memory
-rm(.a, .b, .c, .current_dependend, .current_independend, .current_ind_label,
-   .current_stat, .current_value, .current_v_label, answers)
+rm(.a, .answers, .b, .c, .current_answer, .current_dependend, .current_d_label,
+   .current_independend, .current_ind_label, .current_stat, .current_value,
+   .current_s_label, .current_v_label, .section, answers, answer_collection,
+   columns, headstructure, longest_string, pack, sections, stat_labels,
+   tablefirsthead, tablehead, xtab_columns)
