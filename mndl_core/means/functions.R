@@ -174,6 +174,32 @@ write_perc <- function(dependend, independend, value) {
 
 }
 
+write_ptiles <- function(dependend, independend, value) {
+  # Get data
+  numbers <- get_subset(dependend, independend, value)
+
+  # Calculate 25%, 50% and 75% percentiles
+  quartiles <- c()
+  quartiles[1] <- stats::quantile(numbers, probs = 0.25, na.rm = TRUE)
+  quartiles[2] <- stats::quantile(numbers, probs = 0.50, na.rm = TRUE)
+  quartiles[3] <- stats::quantile(numbers, probs = 0.75, na.rm = TRUE)
+
+  results <- c()
+
+  # Check if results real numbers. If not, create a "-" in LaTeX code
+  for (.quartile in quartiles) {
+    if (!is.infinite(.quartile) && !is.na(.quartile) && !is.nan(.quartile))
+      results[length(results) + 1] <- format(round(.quartile, decimal_places), nsmall = decimal_places)
+    else
+      results[length(results) + 1] <- "-"
+  }
+
+  # Create LaTeX code
+  chunk <- paste(" & ", results[1], " & ", results[2], " & ", results[3], sep = "")
+
+  return(chunk)
+}
+
 # Standard deviation
 write_sd <- function(dependend, independend, value) {
   # Get data

@@ -37,7 +37,7 @@ if (table_type == "means") {
   footer              <- ""
   statistical_values  <- c("obs", "med", "mean", "sd")
   # Available statistical values:
-  # obs, med, mean, sd, ci, min, max, mode
+  # obs, med, ptiles, mean, sd, ci, min, max, mode, perc
   #-------------------------------------------------------------
 
   cat("\n#! Generating TEX file \U0001F529 ...\n\n")
