@@ -17,8 +17,14 @@ library(rio, warn.conflicts = FALSE)          # Version 0.5.16
 library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 
 # Get the table type ("means" or "percentages")
-table_type <- readChar("input/type.txt", file.info("input/type.txt")$size)
-table_type <- tolower(gsub(" ", "", table_type))
+# from file (only read first line)
+connection <- file("input/type.txt", "r")
+table_type <- readLines(connection, n = 1)
+close(connection)
+
+# Manipulate string (tolower and remove spaces)
+table_type <- tolower(table_type)
+table_type <- gsub(" ", "", table_type)
 
 if (table_type == "means") {
 
@@ -68,3 +74,6 @@ if (table_type == "means") {
   cat("#! Unknown table type!")
 
 }
+
+# Free memory
+rm(connection)
