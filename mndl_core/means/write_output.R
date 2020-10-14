@@ -19,17 +19,18 @@ preamble <- paste("\\documentclass[10pt, twoside]{article}
 
 \\begin{document}
 
-\\title{", survey_title, "}
-\\date{}
+\t\\title{", survey_title, "}
+\t\\date{}
 
-%\\maketitle", sep = "")
+\t%\\maketitle
+", sep = "")
 
 write(preamble, file = "twoway.tex", append = FALSE)
 
 # Write code
 write(twoway_table, file = "twoway.tex", append = TRUE)
 
-write("\\end{document}\n\n% This document was generated using Mendel.", file = "twoway.tex", append = TRUE)
+write("\t\\end{center}\n\n\\end{document}\n\n% This document was generated using Mendel.", file = "twoway.tex", append = TRUE)
 
 cat("\n#! Building PDF file \U0001F9F1 ...\n\n")
 

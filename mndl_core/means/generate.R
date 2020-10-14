@@ -22,7 +22,7 @@ for (.current_independend in independend_vars) {
     .current_ind_label <- independend_labels[.b]
 
   # String for LaTeX code of the current section of the twoway table; write Q/SQ label
-  pack <- paste("\t\\multicolumn{", columns, "}{l}{", .current_ind_label, "} \\\\\n", sep = "")
+  pack <- paste("\t\t\t\\multicolumn{", columns, "}{l}{", .current_ind_label, "} \\\\\n", sep = "")
   # Iterate through the answer values of the current independend survey variable
   for (.current_value in answer_list[[.b]]$value) {
     # If there is no label for the current answer value,
@@ -32,7 +32,7 @@ for (.current_independend in independend_vars) {
     else
       .current_v_label <- (dplyr::filter(answer_list[[.b]], value == .current_value))$label
     # Write answer label
-    pack <- paste(pack, "\t\\hskip5mm ", .current_v_label, sep = "")
+    pack <- paste(pack, "\t\t\t\\hskip5mm ", .current_v_label, sep = "")
     .current_value <- as.numeric(.current_value)
     .a <- 1 # Counter for the dependend survey variables
     # Iterate through the dependend survey variables
@@ -59,7 +59,7 @@ for (.current_independend in independend_vars) {
   }
   # Add space between sections
   if (.b < length(independend_vars))
-    pack <- paste(pack, "\t[\\normalbaselineskip]\n\n", sep = "")
+    pack <- paste(pack, "\t\t\t[\\normalbaselineskip]\n\n", sep = "")
   # Code of this section is complete
   sections[length(sections) + 1] <- pack
   .b <- .b + 1
@@ -67,9 +67,9 @@ for (.current_independend in independend_vars) {
 
 ## LaTeX
 # Create tablefirsthead and tablehead
-tablefirsthead <- "\\tablefirsthead {\n"
-tablehead <- "\\tablehead {\n"
-headstructure <- "\t\\toprule\n\t"
+tablefirsthead <- "\t\\tablefirsthead {\n"
+tablehead <- "\t\\tablehead {\n"
+headstructure <- "\t\t\\toprule\n\t\t"
 stat_labels <- c()
 
 # Get labels for statistical values
@@ -95,10 +95,10 @@ for (.current_d_label in dependend_labels) {
 }
 
 # End row and creat cmidrule
-headstructure <- paste(headstructure, " \\\\\n\t\\cmidrule(l{2mm}r{2mm}){2-", columns, "}", sep = "")
+headstructure <- paste(headstructure, " \\\\\n\t\t\\cmidrule(l{2mm}r{2mm}){2-", columns, "}", sep = "")
 
 # New line
-headstructure <- paste(headstructure, " \n\t", sep = "")
+headstructure <- paste(headstructure, " \n\t\t", sep = "")
 
 # Write labels for statistical values (special case for percentile labels)
 if ("ptiles" %in% statistical_values) {
@@ -118,7 +118,7 @@ if ("ptiles" %in% statistical_values) {
   }
 
   # End row
-  headstructure <- paste(headstructure, " \\\\\n\t", sep = "")
+  headstructure <- paste(headstructure, " \\\\\n\t\t", sep = "")
 
   # Write cmidrules for percentiles
   for (.a in seq_len(length(dependend_labels))) {
@@ -129,7 +129,7 @@ if ("ptiles" %in% statistical_values) {
   }
 
   # End row
-  headstructure <- paste(headstructure, "\n\t", sep = "")
+  headstructure <- paste(headstructure, "\n\t\t", sep = "")
 
   # Write percentile labels
   for (.a in seq_len(length(dependend_labels))) {
@@ -150,11 +150,11 @@ if ("ptiles" %in% statistical_values) {
 }
 
 # End row
-headstructure <- paste(headstructure, " \\\\\n\t\\midrule", sep = "")
+headstructure <- paste(headstructure, " \\\\\n\t\t\\midrule", sep = "")
 
 # Assemble tablefirsthead and tablehead
-tablefirsthead <- paste(tablefirsthead, headstructure, "\n}\n\n", sep = "")
-tablehead <- paste(tablehead, headstructure, "\n}\n\n", sep = "")
+tablefirsthead <- paste(tablefirsthead, headstructure, "\n\t}\n\n", sep = "")
+tablehead <- paste(tablehead, headstructure, "\n\t}\n\n", sep = "")
 
 # Create column types; calculate width for answer label column
 # based on the longest string * 1.6mm
@@ -171,19 +171,21 @@ xtab_columns <- paste("p{", round(longest_string * 1.6, 2), "mm}", xtab_columns,
 
 # Assemble twoway table
 twoway_table <- paste("
-%----------------------------------------------------------- twoway table preamble
+\t%----------------------------------------------------------- twoway table preamble
 
 ", tablefirsthead, tablehead, "
-\\tabletail {
-\t\\bottomrule
-\t\\multicolumn{", columns, "}{r}{\\footnotesize \\emph{Continued on next page}} \\\\
-}
+\t\\tabletail {
+\t\t\\bottomrule
+\t\t\\multicolumn{", columns, "}{r}{\\footnotesize \\emph{Continued on next page}} \\\\
+\t}
 
-\\tablecaption{", caption, "}
+\t\\tablecaption{", caption, "}
 
-%-------------------------------------------------------------------------------
+\t%-------------------------------------------------------------------------------
 
-\\begin{xtabular}{", xtab_columns, "}
+\t\\begin{center}
+
+\t\t\\begin{xtabular}{", xtab_columns, "}
 
 ", sep = "")
 
@@ -191,15 +193,10 @@ for (.section in sections)
   twoway_table <- paste(twoway_table, .section, sep = "")
 
 twoway_table <- paste(twoway_table,"
-\t\\bottomrule
+\t\t\t\\bottomrule \\\\
+\t\t\t\\footnotesize ", footer, " \\normalsize \\\\
 
-\\end{xtabular}
-
-\\vspace{.5em}
-\\footnotesize
-", footer,
-"
-\\normalsize
+\t\t\\end{xtabular}
 ", sep = "")
 
 # Free memory
