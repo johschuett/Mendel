@@ -23,8 +23,7 @@ table_type <- readLines(connection, n = 1)
 close(connection)
 
 # Manipulate string (tolower and remove spaces)
-table_type <- tolower(table_type)
-table_type <- gsub(" ", "", table_type)
+table_type <- tolower(gsub(" ", "", table_type))
 
 if (table_type == "means") {
 
