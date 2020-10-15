@@ -53,7 +53,7 @@ for (.current_independend in independend_vars) {
         )
       }
     }
-    # New line
+    # End row
     pack <- paste(pack, " \\\\\n", sep = "")
     .a <- .a + 1
   }
@@ -120,7 +120,7 @@ if ("ptiles" %in% statistical_values) {
   }
 }
 
-# End row
+# New line
 headstructure <- paste(headstructure, " \n\t\t", sep = "")
 
 # Write labels for statistical values (special case for percentile labels)
@@ -151,7 +151,7 @@ if ("ptiles" %in% statistical_values) {
                            sep = "")
   }
 
-  # End row
+  # New line
   headstructure <- paste(headstructure, "\n\t\t", sep = "")
 
   # Write percentile labels
