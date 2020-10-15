@@ -82,7 +82,7 @@ for (.current_stat in statistical_values) {
           min    = stat_labels[length(stat_labels) + 1] <- "Min.",
           mode   = stat_labels[length(stat_labels) + 1] <- "Mode",
           obs    = stat_labels[length(stat_labels) + 1] <- "Obs.",
-          perc   = stat_labels[length(stat_labels) + 1] <- "\\%",
+          perc   = stat_labels[length(stat_labels) + 1] <- "Perc.",
           ptiles = stat_labels[length(stat_labels) + 1] <- "Percentiles",
           sd     = stat_labels[length(stat_labels) + 1] <- "St. Dev."
   )
@@ -94,7 +94,7 @@ for (.current_d_label in dependend_labels) {
   headstructure <- paste(headstructure, " & \\multicolumn{", (columns - 1) / length(dependend_labels), "}{c}{", .current_d_label, "}", sep = "")
 }
 
-# End row and creat cmidrule
+# End row and create cmidrule
 headstructure <- paste(headstructure, " \\\\\n\t\t\\cmidrule(l{2mm}r{2mm}){2-", columns, "}", sep = "")
 
 # New line
