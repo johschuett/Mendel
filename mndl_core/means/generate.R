@@ -95,9 +95,32 @@ for (.current_d_label in dependend_labels) {
 }
 
 # End row and create cmidrule
-headstructure <- paste(headstructure, " \\\\\n\t\t\\cmidrule(l{2mm}r{2mm}){2-", columns, "}", sep = "")
+headstructure <- paste(headstructure, "\\\\\n\t\t", sep = "")
+if ("ptiles" %in% statistical_values) {
+  for (.a in seq_len(length(dependend_labels))) {
+      if (.a == 1) {
+        headstructure <- paste(headstructure, " \\cmidrule(l{2mm}r{2mm}){2-", 1 + length(statistical_values) + 2, "}", sep = "")
+      } else {
+        headstructure <- paste(headstructure, " \\cmidrule(l{2mm}r{2mm}){",
+                               2 + (.a - 1) * (length(statistical_values) + 2),
+                               "-", 1 + .a * (length(statistical_values) + 2), "}",
+                               sep = "")
+      }
+  }
+} else {
+  for (.a in seq_len(length(dependend_labels))) {
+    if (.a == 1) {
+      headstructure <- paste(headstructure, " \\cmidrule(l{2mm}r{2mm}){2-", 1 + length(statistical_values), "}", sep = "")
+    } else {
+      headstructure <- paste(headstructure, " \\cmidrule(l{2mm}r{2mm}){",
+                             2 + (.a - 1) * length(statistical_values),
+                             "-", 1 + .a * length(statistical_values), "}",
+                             sep = "")
+    }
+  }
+}
 
-# New line
+# End row
 headstructure <- paste(headstructure, " \n\t\t", sep = "")
 
 # Write labels for statistical values (special case for percentile labels)
@@ -140,6 +163,8 @@ if ("ptiles" %in% statistical_values) {
         headstructure <- paste(headstructure, " & \\mc{25\\%} & \\mc{50\\%} & \\mc{75\\%}", sep = "")
     }
   }
+  # Free memory
+  rm(ptiles_pos)
 } else { # No percentiles
   for (.a in seq_len(length(dependend_labels))) {
     for (.current_s_label in stat_labels) {
@@ -203,5 +228,5 @@ twoway_table <- paste(twoway_table,"\n\t\t\\end{xtabular}\n", sep = "")
 rm(.a, .answers, .b, .c, .current_answer, .current_dependend, .current_d_label,
    .current_independend, .current_ind_label, .current_stat, .current_value,
    .current_s_label, .current_v_label, .section, answers, answer_collection,
-   columns, headstructure, longest_string, pack, ptiles_pos, sections, stat_labels,
+   columns, headstructure, longest_string, pack, sections, stat_labels,
    tablefirsthead, tablehead, xtab_columns)

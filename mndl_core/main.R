@@ -19,7 +19,7 @@ library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 # Get the table type ("means" or "percentages")
 # from file (only read first line)
 connection <- file("input/type.txt", "r")
-table_type <- readLines(connection, n = 1)
+table_type <- readLines(connection, n = 1, warn = FALSE)
 close(connection)
 
 # Manipulate string (tolower and remove spaces)
