@@ -16,7 +16,7 @@ preamble <- paste("\\documentclass[10pt, twoside]{article}
 \\usepackage{xtab}
 
 \\newcommand{\\mc}[1]{\\multicolumn{1}{c}{#1}}
-%\\newcolumntype{C}[1]{>{\\centering\\arraybackslash}p{#1}}
+\\newcolumntype{C}[1]{>{\\centering\\arraybackslash}p{#1}}
 
 \\begin{document}
 
