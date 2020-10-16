@@ -29,6 +29,14 @@ if ("options" %in% ls()) {
   decimal_places <- as.integer(decimal_places)
   decimal_places_perc <- as.integer(decimal_places_perc)
 
+  # Check decimal places for illegal values
+  if (decimal_places > 3) (decimal_places <- 3)
+  else if (decimal_places < 0) (decimal_places <- 0)
+
+  # Check decimal places for percentages for illegal values
+  if (decimal_places_perc > 3) (decimal_places_perc <- 3)
+  else if (decimal_places_perc < 0) (decimal_places_perc <- 0)
+
   # Remove all whitespaces from statistical_values
   # and convert to lower space, then split the string;
   # every value can only occur once
@@ -39,7 +47,7 @@ if ("options" %in% ls()) {
   # Generate standard caption
   if ("caption" %!in% options$option) {
     caption <- ""
-    
+
     # Check amount of dependend survery variables
     if (length(dependend_labels) > 1) {
       .a <- 1 # Counter for dependend labels
