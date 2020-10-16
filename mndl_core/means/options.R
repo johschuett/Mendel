@@ -26,6 +26,10 @@ if ("options" %in% ls()) {
   }
   # Convert option values to integers
   ci_level <- as.double(ci_level)
+
+  # Check CI level for illegal values
+  if (ci_level %!in% c(0.01, 0.025, 0.05, 0.1)) (ci_level <- 0.05)
+
   decimal_places <- as.integer(decimal_places)
   decimal_places_perc <- as.integer(decimal_places_perc)
 
