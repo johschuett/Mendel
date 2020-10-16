@@ -112,7 +112,8 @@ if (length(statistical_values) > 1) {
     # Insert label for current dependend survey variable
     headstructure <- paste(headstructure, " & \\multicolumn{",
                           (columns - 1) / length(dependend_labels),
-                          "}{C{", dependend_width,"mm}}{",.current_d_label, "}",
+                          "}{c}{{\\parbox{", dependend_width,
+                          "mm}{\\centering ",.current_d_label, "}}}",
                           sep = "")
     }
     # Free memory
