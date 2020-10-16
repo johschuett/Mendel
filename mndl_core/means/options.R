@@ -39,10 +39,14 @@ if ("options" %in% ls()) {
   # Generate standard caption
   if ("caption" %!in% options$option) {
     caption <- ""
-    if (length(dependend_labels) < 1) {
+    
+    # Check amount of dependend survery variables
+    if (length(dependend_labels) > 1) {
       .a <- 1 # Counter for dependend labels
       for (.current_d_label in dependend_labels) {
         if (.a == length(dependend_labels))
+          caption <- paste(caption, "and ``", .current_d_label, "'' ", sep = "")
+        else if (.a == length(dependend_labels) - 1)
           caption <- paste(caption, "``", .current_d_label, "'' ", sep = "")
         else
           caption <- paste(caption, "``", .current_d_label, "'', ", sep = "")
@@ -54,15 +58,20 @@ if ("options" %in% ls()) {
 
     caption <- paste(caption, "over ", sep = "")
 
-    .b <- 1 # Counter for independend variables
-    for (.current_ind_label in independend_labels) {
-      if (.b == length(independend_labels))
-        caption <- paste(caption, "and ``", .current_ind_label, "''.", sep = "")
-      else if (.b == length(independend_labels) - 1)
-        caption <- paste(caption, "``", .current_ind_label, "'' ", sep = "")
-      else
-        caption <- paste(caption, "``", .current_ind_label, "'', ", sep = "")
-      .b <- .b + 1
+    # Check amount of independend survey variables
+    if (length(independend_labels) > 1) {
+        .b <- 1 # Counter for independend variables
+        for (.current_ind_label in independend_labels) {
+          if (.b == length(independend_labels))
+            caption <- paste(caption, "and ``", .current_ind_label, "''.", sep = "")
+          else if (.b == length(independend_labels) - 1)
+            caption <- paste(caption, "``", .current_ind_label, "'' ", sep = "")
+          else
+            caption <- paste(caption, "``", .current_ind_label, "'', ", sep = "")
+          .b <- .b + 1
+        }
+    } else {
+      caption <- paste(caption, "``", independend_labels[1], "''.", sep = "")
     }
   }
 
