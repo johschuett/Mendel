@@ -1,6 +1,15 @@
 # options.R - percentages
 # This script gets custom options if they exist
 
+#----------------------------- Set standard values for options
+#
+caption             <- ""
+decimal_places      <- 2
+decimal_places_perc <- 0
+footer              <- "Note: Percentages may not add up due to rounding."
+#
+#-------------------------------------------------------------
+
 if ("options" %in% ls()) {
   # Get options
   available_options <- c("caption",

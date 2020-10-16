@@ -1,6 +1,18 @@
 # options.R - means
 # This script gets custom options if they exist
 
+#----------------------------- Set standard values for options
+#
+caption             <- ""
+ci_level            <- 0.05
+decimal_places      <- 2
+decimal_places_perc <- 0
+footer              <- ""
+statistical_values  <- c("obs", "med", "mean", "sd")
+# Available statistical values:
+# obs, med, ptiles, mean, sd, ci, min, max, mode, perc
+#-------------------------------------------------------------
+
 if ("options" %in% ls()) {
   # Get options
   available_options <- c("caption",
@@ -25,6 +37,10 @@ if ("options" %in% ls()) {
   statistical_values <- tolower(gsub(" ", "", statistical_values))
   statistical_values <- strsplit(statistical_values, ",", fixed = TRUE)
   statistical_values <- unique(statistical_values[[1]])
+
+  # Special standard footer if percentages occur as statistical values
+  if ("footer" %!in% options$option && "perc" %in% statistical_values)
+    footer <- "Note: Percentages may not add up due to rounding."
 
   # Free memory
   rm(.row, available_options, options)

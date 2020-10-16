@@ -16,6 +16,9 @@ library(rapportools, warn.conflicts = FALSE)  # Version 1.0
 library(rio, warn.conflicts = FALSE)          # Version 0.5.16
 library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 
+# Define %!in% operator
+'%!in%' <- function(x, y)!('%in%'(x, y))
+
 # Get the table type ("means" or "percentages")
 # from file (only read first line)
 connection <- file("input/type.txt", "r")
@@ -27,18 +30,6 @@ table_type <- tolower(gsub(" ", "", table_type))
 
 if (table_type == "means") {
 
-  #----------------------------- Set standard values for options
-  #
-  caption             <- ""
-  ci_level            <- 0.05
-  decimal_places      <- 2
-  decimal_places_perc <- 0
-  footer              <- "Note: Percentages may not add up due to rounding."
-  statistical_values  <- c("obs", "med", "mean", "sd")
-  # Available statistical values:
-  # obs, med, ptiles, mean, sd, ci, min, max, mode, perc
-  #-------------------------------------------------------------
-
   cat("\n#! Generating TEX file \U0001F529 ...\n\n")
 
   # Scripts
@@ -49,15 +40,6 @@ if (table_type == "means") {
   source("mndl_core/means/write_output.R")
 
 } else if (table_type == "percentages") {
-
-  #----------------------------- Set standard values for options
-  #
-  caption             <- ""
-  decimal_places      <- 2
-  decimal_places_perc <- 0
-  footer              <- "Note: Percentages may not add up due to rounding."
-  #
-  #-------------------------------------------------------------
 
   cat("\n#! Generating TEX file \U0001F529 ...\n\n")
 
