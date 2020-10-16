@@ -120,6 +120,8 @@ if (length(statistical_values) > 1) {
                           "}{c}{{\\parbox{", dependend_width, "mm}{\\centering ",.current_d_label, "}}}",
                           sep = "")
     }
+    # Free memory
+    rm(dependend_width)
 } else {
   for (.current_d_label in dependend_labels) {
     # Insert label for current dependend survey variable
