@@ -76,26 +76,62 @@ stat_labels <- c()
 for (.current_stat in statistical_values) {
   switch (.current_stat,
           ci     = stat_labels[length(stat_labels) + 1] <- paste("CI (", (1 - ci_level) * 100, "\\%)", sep = ""),
-          max    = stat_labels[length(stat_labels) + 1] <- "Max.",
+          max    = stat_labels[length(stat_labels) + 1] <- "Max",
           mean   = stat_labels[length(stat_labels) + 1] <- "Mean",
           med    = stat_labels[length(stat_labels) + 1] <- "Median",
-          min    = stat_labels[length(stat_labels) + 1] <- "Min.",
+          min    = stat_labels[length(stat_labels) + 1] <- "Min",
           mode   = stat_labels[length(stat_labels) + 1] <- "Mode",
-          obs    = stat_labels[length(stat_labels) + 1] <- "Obs.",
-          perc   = stat_labels[length(stat_labels) + 1] <- "Perc.",
+          obs    = stat_labels[length(stat_labels) + 1] <- "Obs",
+          perc   = stat_labels[length(stat_labels) + 1] <- "Perc",
           ptiles = stat_labels[length(stat_labels) + 1] <- "Percentiles",
-          sd     = stat_labels[length(stat_labels) + 1] <- "St. Dev."
+          sd     = stat_labels[length(stat_labels) + 1] <- "Std. D."
   )
 }
 
 # Building headstructure
-for (.current_d_label in dependend_labels) {
-  # Insert label for current dependend survey variable
-  headstructure <- paste(headstructure, " & \\multicolumn{", (columns - 1) / length(dependend_labels), "}{c}{", .current_d_label, "}", sep = "")
+if (length(statistical_values) > 1) {
+  # Calculate width of one dependend variable "column"
+  if ("ptiles" %in% statistical_values) {
+    # 5mm is the average width of a statistic label (except for percentiles)
+    # The percentiles label has a width of 30mm
+    dependend_width <- 5 * (length(statistical_values) - 1) + 30
+  } else {
+    dependend_width <- 5 * length(statistical_values)
+  }
+
+  # CI gets an extra of 12mm
+  if ("ci" %in% statistical_values) {
+    dependend_width <- dependend_width + 12
+  }
+
+  # Set lower margin
+  if (dependend_width < 15)
+    dependend_width <- 15
+
+  for (.current_d_label in dependend_labels) {
+    # Insert label for current dependend survey variable
+    #headstructure <- paste(headstructure, " & \\multicolumn{",
+    #                      (columns - 1) / length(dependend_labels),
+    #                      "}{C{", dependend_width,"mm}}{",.current_d_label, "}",
+    #                      sep = "")
+
+    headstructure <- paste(headstructure, " & \\multicolumn{",
+                          (columns - 1) / length(dependend_labels),
+                          "}{c}{{\\parbox{", dependend_width, "mm}{\\centering ",.current_d_label, "}}}",
+                          sep = "")
+    }
+} else {
+  for (.current_d_label in dependend_labels) {
+    # Insert label for current dependend survey variable
+    headstructure <- paste(headstructure, " & \\multicolumn{",
+                          (columns - 1) / length(dependend_labels),
+                          "}{c}{",.current_d_label, "}",
+                          sep = "")
+  }
 }
 
 # End row and create cmidrule
-headstructure <- paste(headstructure, "\\\\\n\t\t", sep = "")
+headstructure <- paste(headstructure, " \\\\\n\t\t", sep = "")
 if ("ptiles" %in% statistical_values) {
   for (.a in seq_len(length(dependend_labels))) {
       if (.a == 1) {
