@@ -94,30 +94,30 @@ if (length(statistical_values) > 1) {
   if ("ptiles" %in% statistical_values) {
     # 5mm is the average width of a statistic label (except for percentiles)
     # The percentiles label has a width of 30mm
-    dependend_width <- 5 * (length(statistical_values) - 1) + 30
+    .dependend_width <- 5 * (length(statistical_values) - 1) + 30
   } else {
-    dependend_width <- 5 * length(statistical_values)
+    .dependend_width <- 5 * length(statistical_values)
   }
 
   # CI gets an extra of 12mm
   if ("ci" %in% statistical_values) {
-    dependend_width <- dependend_width + 12
+    .dependend_width <- .dependend_width + 12
   }
 
   # Set lower margin
-  if (dependend_width < 15)
-    dependend_width <- 15
+  if (.dependend_width < 15)
+    .dependend_width <- 15
 
   for (.current_d_label in dependend_labels) {
     # Insert label for current dependend survey variable
     headstructure <- paste(headstructure, " & \\multicolumn{",
                           (columns - 1) / length(dependend_labels),
-                          "}{c}{{\\parbox{", dependend_width,
+                          "}{c}{{\\parbox{", .dependend_width,
                           "mm}{\\centering ",.current_d_label, "}}}",
                           sep = "")
     }
     # Free memory
-    rm(dependend_width)
+    rm(.dependend_width)
 } else {
   for (.current_d_label in dependend_labels) {
     # Insert label for current dependend survey variable
@@ -243,6 +243,7 @@ twoway_table <- paste("
 \t\t\\multicolumn{", columns, "}{l}{\\footnotesize \\emph{", footer, "}} \\\\
 \t}
 
+\t\\captionsetup[xtabular]{width = .75\\textwidth}
 \t\\tablecaption{", caption, "}
 
 \t%-------------------------------------------------------------------------------

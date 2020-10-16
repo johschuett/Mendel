@@ -10,6 +10,7 @@ preamble <- paste("\\documentclass[10pt, twoside]{article}
 \\usepackage[english]{babel}
 \\usepackage{array}
 \\usepackage{booktabs}
+\\usepackage{caption}
 \\usepackage{float}
 \\usepackage[left = .2in, right = .2in, top = 1in, bottom = 1in]{geometry}
 \\usepackage{multirow}

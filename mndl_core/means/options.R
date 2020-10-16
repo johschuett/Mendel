@@ -3,11 +3,9 @@
 
 #----------------------------- Set standard values for options
 #
-caption             <- ""
 ci_level            <- 0.05
 decimal_places      <- 2
 decimal_places_perc <- 0
-footer              <- ""
 statistical_values  <- c("obs", "med", "mean", "sd")
 # Available statistical values:
 # obs, med, ptiles, mean, sd, ci, min, max, mode, perc
@@ -38,9 +36,41 @@ if ("options" %in% ls()) {
   statistical_values <- strsplit(statistical_values, ",", fixed = TRUE)
   statistical_values <- unique(statistical_values[[1]])
 
+  # Generate standard caption
+  if ("caption" %!in% options$option) {
+    caption <- ""
+    if (length(dependend_labels) < 1) {
+      .a <- 1 # Counter for dependend labels
+      for (.current_d_label in dependend_labels) {
+        if (.a == length(dependend_labels))
+          caption <- paste(caption, "``", .current_d_label, "'' ", sep = "")
+        else
+          caption <- paste(caption, "``", .current_d_label, "'', ", sep = "")
+        .a <- .a + 1
+      }
+    } else {
+      caption <- paste(caption, "``", dependend_labels[1], "'' ", sep = "")
+    }
+
+    caption <- paste(caption, "over ", sep = "")
+
+    .b <- 1 # Counter for independend variables
+    for (.current_ind_label in independend_labels) {
+      if (.b == length(independend_labels))
+        caption <- paste(caption, "and ``", .current_ind_label, "''.", sep = "")
+      else if (.b == length(independend_labels) - 1)
+        caption <- paste(caption, "``", .current_ind_label, "'' ", sep = "")
+      else
+        caption <- paste(caption, "``", .current_ind_label, "'', ", sep = "")
+      .b <- .b + 1
+    }
+  }
+
   # Special standard footer if percentages occur as statistical values
   if ("footer" %!in% options$option && "perc" %in% statistical_values)
     footer <- "Note: Percentages may not add up due to rounding."
+  else
+    footer <- ""
 
   # Free memory
   rm(.row, available_options, options)
