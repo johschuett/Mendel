@@ -24,6 +24,7 @@ if ("options" %in% ls()) {
     if (tolower(options[.row, "option"]) %in% available_options)
       assign(tolower(options[.row, "option"]), options[.row, "value"])
   }
+  
   # Convert option values to integers
   ci_level <- as.double(ci_level)
 

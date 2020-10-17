@@ -16,7 +16,7 @@ sections <- c()
 for (.current_independend in independend_vars) {
   # If there is no label for the current independend survery variable,
   # use the variable name as the label
-  if (rapportools::is.empty(independend_labels[.b]))
+  if (is_empty(independend_labels[.b]))
     .current_ind_label <- .current_independend
   else
     .current_ind_label <- independend_labels[.b]
@@ -27,7 +27,7 @@ for (.current_independend in independend_vars) {
   for (.current_value in answer_list[[.b]]$value) {
     # If there is no label for the current answer value,
     # use the answer value as the label
-    if (rapportools::is.empty((dplyr::filter(answer_list[[.b]], value == .current_value))$label))
+    if (is_empty((dplyr::filter(answer_list[[.b]], value == .current_value))$label))
       .current_v_label <- .current_value
     else
       .current_v_label <- (dplyr::filter(answer_list[[.b]], value == .current_value))$label

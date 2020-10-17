@@ -25,17 +25,17 @@ dependend_vars <- c()
 independend_vars <- c()
 
 for (.row in seq_len(nrow(plan))) {
-  if (!rapportools::is.empty(plan[.row, "dependend"]))
+  if (!is_empty(plan[.row, "dependend"]))
     dependend_vars[length(dependend_vars) + 1] <- plan[.row, "dependend"]
 
-  if (!rapportools::is.empty(plan[.row, 2]))
+  if (!is_empty(plan[.row, 2]))
     independend_vars[length(independend_vars) + 1] <- plan[.row, "independend"]
 }
 
 # Create new dataset containing only the dependend and independend survey variables
 data <- data[, unique(c(dependend_vars, independend_vars))]
 # Convert empty entries to NAs
-data[rapportools::is.empty(data)] <- NA
+data[data == ""] <- NA
 # Clean the data from non-numerical entries
 data[] <- lapply(data, function(x) as.numeric(as.character(x)))
 
@@ -52,7 +52,7 @@ for (.el in dependend_vars) {
   dependend_types[length(dependend_types) + 1] <- meta[.row, "type/scale"]
 
   .i <- 1 # Index for going back the rows until hitting a type
-  while (rapportools::is.empty(dependend_types[length(dependend_types)])) {
+  while (is_empty(dependend_types[length(dependend_types)])) {
     dependend_types[length(dependend_types)] <- meta[.row - .i, "type/scale"]
     .i <- .i + 1
   }
@@ -78,7 +78,7 @@ for (.el in independend_vars) {
   independend_types[length(independend_types) + 1] <- meta[.row, "type/scale"]
 
   .i <- 1 # Index for going back the rows until hitting a type
-  while (rapportools::is.empty(independend_types[length(independend_types)])) {
+  while (is_empty(independend_types[length(independend_types)])) {
     independend_types[length(independend_types)] <- meta[.row - .i, "type/scale"]
     .i <- .i + 1
   }

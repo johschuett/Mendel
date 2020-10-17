@@ -12,9 +12,17 @@ Sys.setlocale("LC_ALL", "en_US.UTF-8")
 
 # Packages
 library(dplyr, warn.conflicts = FALSE)        # Version 1.0.1
-library(rapportools, warn.conflicts = FALSE)  # Version 1.0
 library(rio, warn.conflicts = FALSE)          # Version 0.5.16
 library(stats, warn.conflicts = FALSE)        # Version 4.0.2
+
+# Define is_empty() function
+is_empty <- function(x) {
+  result <- gsub(" ", "", x)
+  if (is.na(result))
+    return(FALSE)
+  else
+    return(result == "")
+}
 
 # Define %!in% operator
 '%!in%' <- function(x, y)!('%in%'(x, y))
