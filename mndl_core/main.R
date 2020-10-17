@@ -18,10 +18,7 @@ library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 # Define is_empty() function
 is_empty <- function(x) {
   result <- gsub(" ", "", x)
-  if (is.na(result))
-    return(FALSE)
-  else
-    return(result == "")
+  ifelse(is.na(result), return(FALSE), return(result == ""))
 }
 
 # Define %!in% operator
