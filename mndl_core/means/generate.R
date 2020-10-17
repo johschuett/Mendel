@@ -108,23 +108,33 @@ if (length(statistical_values) > 1) {
   if (.dependend_width < 15)
     .dependend_width <- 15
 
+  .a <- 1 # Index for dependend survey variables
   for (.current_d_label in dependend_labels) {
+    # Replace label with variable name if empty
+    if (is_empty(.current_d_label))
+      .current_d_label <- dependend_vars[.a]
     # Insert label for current dependend survey variable
     headstructure <- paste(headstructure, " & \\multicolumn{",
                           (columns - 1) / length(dependend_labels),
                           "}{c}{{\\parbox{", .dependend_width,
                           "mm}{\\centering ",.current_d_label, "}}}",
                           sep = "")
-    }
-    # Free memory
-    rm(.dependend_width)
+    .a <- .a + 1
+  }
+  # Free memory
+  rm(.dependend_width)
 } else {
+  .a <- 1 # Index for dependend survey variables
   for (.current_d_label in dependend_labels) {
+    # Replace label with variable name if empty
+    if (is_empty(.current_d_label))
+      .current_d_label <- dependend_vars[.a]
     # Insert label for current dependend survey variable
     headstructure <- paste(headstructure, " & \\multicolumn{",
                           (columns - 1) / length(dependend_labels),
                           "}{c}{",.current_d_label, "}",
                           sep = "")
+    .a <- .a + 1
   }
 }
 

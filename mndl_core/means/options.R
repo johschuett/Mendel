@@ -24,7 +24,7 @@ if ("options" %in% ls()) {
     if (tolower(options[.row, "option"]) %in% available_options)
       assign(tolower(options[.row, "option"]), options[.row, "value"])
   }
-  
+
   # Convert option values to integers
   ci_level <- as.double(ci_level)
 
@@ -57,6 +57,10 @@ if ("options" %in% ls()) {
     if (length(dependend_labels) > 1) {
       .a <- 1 # Counter for dependend labels
       for (.current_d_label in dependend_labels) {
+        # Replace label with variable name if empty
+        if (is_empty(.current_d_label))
+          .current_d_label <- dependend_vars[.a]
+
         if (.a == length(dependend_labels))
           caption <- paste(caption, "and ``", .current_d_label, "'' ", sep = "")
         else if (.a == length(dependend_labels) - 1)
@@ -66,7 +70,13 @@ if ("options" %in% ls()) {
         .a <- .a + 1
       }
     } else {
-      caption <- paste(caption, "``", dependend_labels[1], "'' ", sep = "")
+      # Replace label with variable name if empty
+      if (is_empty(dependend_labels[1]))
+        .current_d_label <- dependend_vars[1]
+      else
+        .current_d_label <- dependend_labels[1]
+
+      caption <- paste(caption, "``", .current_d_label, "'' ", sep = "")
     }
 
     caption <- paste(caption, "over ", sep = "")
@@ -75,6 +85,10 @@ if ("options" %in% ls()) {
     if (length(independend_labels) > 1) {
         .b <- 1 # Counter for independend variables
         for (.current_ind_label in independend_labels) {
+          # Replace label with variable name if empty
+          if (is_empty(.current_ind_label))
+            .current_ind_label <- independend_vars[.b]
+
           if (.b == length(independend_labels))
             caption <- paste(caption, "and ``", .current_ind_label, "''.", sep = "")
           else if (.b == length(independend_labels) - 1)
@@ -84,7 +98,13 @@ if ("options" %in% ls()) {
           .b <- .b + 1
         }
     } else {
-      caption <- paste(caption, "``", independend_labels[1], "''.", sep = "")
+      # Replace label with variable name if empty
+      if (is_empty(independend_labels[1]))
+        .current_ind_label <- independend_vars[1]
+      else
+        .current_ind_label <- independend_labels[1]
+
+      caption <- paste(caption, "``", .current_ind_label, "''.", sep = "")
     }
   }
 

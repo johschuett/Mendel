@@ -64,7 +64,12 @@ for (.el in dependend_vars) {
       .current_row <- .current_row - 1
       .current_class <- meta[.current_row, "class"]
     }
-    dependend_labels[length(dependend_labels)] <- paste(meta[.current_row, "text"], ": ", dependend_labels[length(dependend_labels)], sep = "")
+    # Check if matrix/multiple choice label or SQ label is empty
+    if(!is_empty(meta[.current_row, "text"]) && !is_empty(dependend_labels[length(dependend_labels)])) {
+      dependend_labels[length(dependend_labels)] <- paste(meta[.current_row, "text"], ": ",
+                                                          dependend_labels[length(dependend_labels)],
+                                                          sep = "")
+    }
   }
 }
 
@@ -90,7 +95,12 @@ for (.el in independend_vars) {
       .current_row <- .current_row - 1
       .current_class <- meta[.current_row, "class"]
     }
-    independend_labels[length(independend_labels)] <- paste(meta[.current_row, "text"], ": ", independend_labels[length(independend_labels)], sep = "")
+    # Check if matrix/multiple choice label is empty
+    if(!is_empty(meta[.current_row, "text"]) && !is_empty(independend_labels[length(independend_labels)])) {
+      independend_labels[length(independend_labels)] <- paste(meta[.current_row, "text"], ": ",
+                                                              independend_labels[length(independend_labels)],
+                                                              sep = "")
+    }
   }
 }
 
