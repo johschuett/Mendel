@@ -2,12 +2,12 @@
 # This script imports the data from the CSV files and sorts them
 
 # Import data from file
-data <- import("input/data.csv")
+data <- rio::import("input/data.csv", encoding = "UTF-8")
 # Import metadata and the twoway table plan from files
-meta <- import("input/meta.csv")
-plan <- import("input/plan.csv")
+meta <- rio::import("input/meta.csv", encoding = "UTF-8")
+plan <- rio::import("input/plan.csv", encoding = "UTF-8")
 # Import options file if it exists
-if (file.exists("input/options.csv")) (options <- import("input/options.csv"))
+if (file.exists("input/options.csv")) (options <- rio::import("input/options.csv", encoding = "UTF-8"))
 
 # Get survey title
 line_of_title <- which(meta$name == "surveyls_title")
