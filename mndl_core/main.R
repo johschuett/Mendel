@@ -16,7 +16,13 @@ library(rio, warn.conflicts = FALSE)          # Version 0.5.16
 library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 
 # Define is_empty() function
-is_empty <- function(x) (trimws(x) == "")
+is_empty <- function(x, na.ignore = FALSE) {
+  if (na.ignore)
+    ifelse(is.na(x), return(FALSE), return(trimws(x) == ""))
+  else
+    return(trimws(x) == "")
+}
+
 # Define %!in% operator
 '%!in%' <- function(x, y)!('%in%'(x, y))
 

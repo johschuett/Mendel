@@ -16,7 +16,7 @@ sections <- c()
 for (.current_independend in independend_vars) {
   # If there is no label for the current independend survery variable,
   # use the variable name as the label
-  if (is_empty(independend_labels[.b]))
+  if (is_empty(independend_labels[.b], na.ignore = TRUE))
     .current_ind_label <- .current_independend
   else
     .current_ind_label <- independend_labels[.b]
@@ -27,7 +27,7 @@ for (.current_independend in independend_vars) {
   for (.current_value in answer_list[[.b]]$value) {
     # If there is no label for the current answer value,
     # use the answer value as the label
-    if (is_empty((dplyr::filter(answer_list[[.b]], value == .current_value))$label))
+    if (is_empty((dplyr::filter(answer_list[[.b]], value == .current_value))$label, na.ignore = TRUE))
       .current_v_label <- .current_value
     else
       .current_v_label <- (dplyr::filter(answer_list[[.b]], value == .current_value))$label
@@ -111,7 +111,7 @@ if (length(statistical_values) > 1) {
   .a <- 1 # Index for dependend survey variables
   for (.current_d_label in dependend_labels) {
     # Replace label with variable name if empty
-    if (is_empty(.current_d_label))
+    if (is_empty(.current_d_label, na.ignore = TRUE))
       .current_d_label <- dependend_vars[.a]
     # Insert label for current dependend survey variable
     headstructure <- paste(headstructure, " & \\multicolumn{",
@@ -127,7 +127,7 @@ if (length(statistical_values) > 1) {
   .a <- 1 # Index for dependend survey variables
   for (.current_d_label in dependend_labels) {
     # Replace label with variable name if empty
-    if (is_empty(.current_d_label))
+    if (is_empty(.current_d_label, na.ignore = TRUE))
       .current_d_label <- dependend_vars[.a]
     # Insert label for current dependend survey variable
     headstructure <- paste(headstructure, " & \\multicolumn{",
@@ -233,7 +233,7 @@ for (.answers in answer_list)
   for (.current_answer in .answers$label)
     answer_collection[length(answer_collection) + 1] <- .current_answer
 
-longest_string <- max(nchar(c(answer_collection, independend_labels)))
+longest_string <- max(nchar(c(answer_collection, independend_labels)), na.rm = TRUE)
 
 xtab_columns <- paste(replicate(columns - 1, "r"), sep = "", collapse = "")
 xtab_columns <- paste("p{", round(longest_string * 1.6, 2), "mm}", xtab_columns, sep = "") # Alternative: l
