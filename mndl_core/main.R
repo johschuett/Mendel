@@ -16,11 +16,7 @@ library(rio, warn.conflicts = FALSE)          # Version 0.5.16
 library(stats, warn.conflicts = FALSE)        # Version 4.0.2
 
 # Define is_empty() function
-is_empty <- function(x) {
-  result <- gsub(" ", "", x)
-  ifelse(is.na(result), return(FALSE), return(result == ""))
-}
-
+is_empty <- function(x) (trimws(x) == "")
 # Define %!in% operator
 '%!in%' <- function(x, y)!('%in%'(x, y))
 
