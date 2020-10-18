@@ -58,7 +58,7 @@ if ("options" %in% ls()) {
       .a <- 1 # Counter for dependend labels
       for (.current_d_label in dependend_labels) {
         # Replace label with variable name if empty
-        if (is_empty(.current_d_label))
+        if (is_empty(.current_d_label, na.ignore = TRUE))
           .current_d_label <- dependend_vars[.a]
 
         if (.a == length(dependend_labels))
@@ -71,7 +71,7 @@ if ("options" %in% ls()) {
       }
     } else {
       # Replace label with variable name if empty
-      if (is_empty(dependend_labels[1]))
+      if (is_empty(dependend_labels[1], na.ignore = TRUE))
         .current_d_label <- dependend_vars[1]
       else
         .current_d_label <- dependend_labels[1]
@@ -86,7 +86,7 @@ if ("options" %in% ls()) {
         .b <- 1 # Counter for independend variables
         for (.current_ind_label in independend_labels) {
           # Replace label with variable name if empty
-          if (is_empty(.current_ind_label))
+          if (is_empty(.current_ind_label, na.ignore = TRUE))
             .current_ind_label <- independend_vars[.b]
 
           if (.b == length(independend_labels))
@@ -99,7 +99,7 @@ if ("options" %in% ls()) {
         }
     } else {
       # Replace label with variable name if empty
-      if (is_empty(independend_labels[1]))
+      if (is_empty(independend_labels[1], na.ignore = TRUE))
         .current_ind_label <- independend_vars[1]
       else
         .current_ind_label <- independend_labels[1]

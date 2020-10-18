@@ -37,7 +37,7 @@ data <- data[, unique(c(dependend_vars, independend_vars))]
 # Convert empty entries to NAs
 data[sapply(data, is_empty)] <- NA
 # Clean the data from non-numerical entries
-data[] <- lapply(data, function(x) as.numeric(as.character(x)))
+data[] <- sapply(data, function(x) as.numeric(as.character(x)))
 
 # Get the labels, rows and types for the survey variables
 dependend_labels <- c()
