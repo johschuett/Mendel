@@ -28,7 +28,7 @@ for (.row in seq_len(nrow(plan))) {
   if (!is_empty(plan[.row, "dependend"]))
     dependend_vars[length(dependend_vars) + 1] <- plan[.row, "dependend"]
 
-  if (!is_empty(plan[.row, 2]))
+  if (!is_empty(plan[.row, "independend"]))
     independend_vars[length(independend_vars) + 1] <- plan[.row, "independend"]
 }
 
@@ -65,7 +65,7 @@ for (.el in dependend_vars) {
       .current_class <- meta[.current_row, "class"]
     }
     # Check if matrix/multiple choice label or SQ label is empty
-    if(!is_empty(meta[.current_row, "text"]) && !is_empty(dependend_labels[length(dependend_labels)])) {
+    if(!is_empty(meta[.current_row, "text"], na.ignore = TRUE) && !is_empty(dependend_labels[length(dependend_labels)], na.ignore = TRUE)) {
       dependend_labels[length(dependend_labels)] <- paste(meta[.current_row, "text"], ": ",
                                                           dependend_labels[length(dependend_labels)],
                                                           sep = "")
@@ -96,7 +96,7 @@ for (.el in independend_vars) {
       .current_class <- meta[.current_row, "class"]
     }
     # Check if matrix/multiple choice label is empty
-    if(!is_empty(meta[.current_row, "text"]) && !is_empty(independend_labels[length(independend_labels)])) {
+    if(!is_empty(meta[.current_row, "text"], na.ignore = TRUE) && !is_empty(independend_labels[length(independend_labels)], na.ignore = TRUE)) {
       independend_labels[length(independend_labels)] <- paste(meta[.current_row, "text"], ": ",
                                                               independend_labels[length(independend_labels)],
                                                               sep = "")
