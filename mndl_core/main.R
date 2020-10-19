@@ -5,15 +5,15 @@
 # License: GNU General Public License v2.0 only                      #
 ######################################################################
 
-# Version: R 4.0.2
+# Version: R 4.0.3
 
 # Set encoding
 Sys.setlocale("LC_ALL", "en_US.UTF-8")
 
 # Packages
-library(dplyr, warn.conflicts = FALSE)        # Version 1.0.1
+library(dplyr, warn.conflicts = FALSE)        # Version 1.0.2
 library(rio, warn.conflicts = FALSE)          # Version 0.5.16
-library(stats, warn.conflicts = FALSE)        # Version 4.0.2
+library(stats, warn.conflicts = FALSE)        # Version 4.0.3
 
 # Define is_empty() function
 is_empty <- function(x, na.ignore = FALSE) {
@@ -33,7 +33,7 @@ table_type <- readLines(connection, n = 1, warn = FALSE)
 close(connection)
 
 # Manipulate string (tolower and remove spaces)
-table_type <- tolower(gsub(" ", "", table_type))
+table_type <- tolower(trimws(table_type))
 
 if (table_type == "means") {
 
