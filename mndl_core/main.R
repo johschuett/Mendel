@@ -44,7 +44,7 @@ if (table_type == "means") {
   source("mndl_core/means/options.R")
   source("mndl_core/means/functions.R")
   source("mndl_core/means/generate.R")
-  source("mndl_core/means/write_output.R")
+  source("mndl_core/write_output.R")
 
 } else if (table_type == "percentages") {
 
@@ -53,9 +53,9 @@ if (table_type == "means") {
   # Scripts
   source("mndl_core/import.R")
   source("mndl_core/percentages/options.R")
-  #source("mndl_core/percentages/functions.R")
-  #source("mndl_core/percentages/generate.R")
-  #source("mndl_core/percentages/write_output.R")
+  source("mndl_core/percentages/functions.R")
+  source("mndl_core/percentages/generate.R")
+  source("mndl_core/write_output.R")
 
 } else {
 

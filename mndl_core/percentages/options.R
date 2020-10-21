@@ -25,6 +25,14 @@ if ("options" %in% ls()) {
   decimal_places <- as.integer(decimal_places)
   decimal_places_perc <- as.integer(decimal_places_perc)
 
+  # Check decimal places for illegal values
+  if (decimal_places > 3) (decimal_places <- 3)
+  else if (decimal_places < 0) (decimal_places <- 0)
+
+  # Check decimal places for percentages for illegal values
+  if (decimal_places_perc > 3) (decimal_places_perc <- 3)
+  else if (decimal_places_perc < 0) (decimal_places_perc <- 0)
+
   # Free memory
   rm(available_options, options)
 }

@@ -24,13 +24,13 @@ for (.current_independend in independend_vars) {
   # String for LaTeX code of the current section of the twoway table; write Q/SQ label
   pack <- paste("\t\t\t\\multicolumn{", columns, "}{l}{", .current_ind_label, "} \\\\\n", sep = "")
   # Iterate through the answer values of the current independend survey variable
-  for (.current_value in answer_list[[.b]]$value) {
+  for (.current_value in independend_answer_list[[.b]]$value) {
     # If there is no label for the current answer value,
     # use the answer value as the label
-    if (is_empty((dplyr::filter(answer_list[[.b]], value == .current_value))$label, na.ignore = TRUE))
+    if (is_empty((dplyr::filter(independend_answer_list[[.b]], value == .current_value))$label, na.ignore = TRUE))
       .current_v_label <- .current_value
     else
-      .current_v_label <- (dplyr::filter(answer_list[[.b]], value == .current_value))$label
+      .current_v_label <- (dplyr::filter(independend_answer_list[[.b]], value == .current_value))$label
     # Write answer label
     pack <- paste(pack, "\t\t\t\\hskip5mm ", .current_v_label, sep = "")
     .current_value <- as.numeric(.current_value)
@@ -229,7 +229,7 @@ tablehead <- paste(tablehead, headstructure, "\n\t}\n", sep = "")
 # based on the longest string * 1.6mm
 answer_collection <- c()
 
-for (.answers in answer_list)
+for (.answers in independend_answer_list)
   for (.current_answer in .answers$label)
     answer_collection[length(answer_collection) + 1] <- .current_answer
 
@@ -270,8 +270,8 @@ for (.section in sections)
 twoway_table <- paste(twoway_table,"\n\t\t\\end{xtabular}\n", sep = "")
 
 # Free memory
-rm(.a, .answers, .b, .c, .current_answer, .current_dependend, .current_d_label,
+rm(.a, .answers, .b, .current_answer, .current_dependend, .current_d_label,
    .current_independend, .current_ind_label, .current_stat, .current_value,
-   .current_s_label, .current_v_label, .section, answers, answer_collection,
+   .current_s_label, .current_v_label, .section, answer_collection,
    columns, headstructure, longest_string, pack, sections, stat_labels,
    tablefirsthead, tablehead, xtab_columns)

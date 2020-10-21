@@ -155,7 +155,7 @@ write_perc <- function(dependend, independend, value) {
 
   # Get all answer values
   .index <- which(independend_vars == independend)[[1]]
-  current_values <- answer_list[[.index]]$value
+  current_values <- independend_answer_list[[.index]]$value
 
   # Get the amount of observations
   .com <- paste("obs_value <- filter(data, !is.na(", dependend, ") & ", independend, " %in% current_values)", sep = "")
@@ -171,7 +171,6 @@ write_perc <- function(dependend, independend, value) {
   chunk <- paste(" & ", format(round(result, decimal_places_perc), nsmall = decimal_places_perc), sep = "")
 
   return(chunk)
-
 }
 
 write_ptiles <- function(dependend, independend, value) {

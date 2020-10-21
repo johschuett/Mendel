@@ -41,6 +41,7 @@ data[] <- sapply(data, function(x) as.numeric(as.character(x)))
 
 # Get the labels, rows and types for the survey variables
 dependend_labels <- c()
+dependend_rows <- c()
 dependend_types <- c()
 independend_labels <- c()
 independend_rows <- c()
@@ -49,6 +50,7 @@ independend_types <- c()
 for (.el in dependend_vars) {
   .row <- which(meta$name == .el)
   dependend_labels[length(dependend_labels) + 1] <- meta[.row, "text"]
+  dependend_rows[length(dependend_rows) + 1] <- .row
   dependend_types[length(dependend_types) + 1] <- meta[.row, "type/scale"]
 
   .i <- 1 # Index for going back the rows until hitting a type
@@ -107,8 +109,46 @@ for (.el in independend_vars) {
 if (!all(independend_types %in% c("F", "L", "M")))
   stop("\n#! Illegal independend variable type(s)!\n#! No output produced.")
 
+# Create list for all anwers of all dependend survey variables (only for percentage tables)
+if (table_type == "percentages") {
+  dependend_answer_list <- list()
+
+  .a <- 1 # Counter for the dependend survey variables
+  # Get answer values and labels of the dependend survey variables
+  for (.current_dependend in dependend_vars) {
+    # Create empty data frame for answer values and labels
+    answers <- data.frame(value = numeric(), label = character())
+    .c <- 1 # Index for detecting start/end of answers
+    # Get answer values and labels of the current dependend survey variable
+    if (dependend_types[.a] %in% c("F", "M")) {
+      while (meta[dependend_rows[.a] + .c, "class"] == "SQ") (.c <- .c + 1)
+      # Get all answer values and labels
+      while (meta[dependend_rows[.a] + .c, "class"] == "A") {
+        # Save value and label
+        answers[nrow(answers) + 1, ] <- c(meta[dependend_rows[.a] + .c, "name"],
+                                          meta[dependend_rows[.a] + .c, "text"])
+        .c <- .c + 1
+      }
+      # Save data frame in list
+      dependend_answer_list[[.a]] <- answers
+    } else {
+      while (meta[independend_rows[.a] + .c, "class"] == "A") {
+        # Save value and label
+        answers[nrow(answers) + 1, ] <- c(meta[dependend_rows[.a] + .c, "name"],
+                                          meta[dependend_rows[.a] + .c, "text"])
+        .c <- .c + 1
+      }
+      # Save data frame in list
+      dependend_answer_list[[.a]] <- answers
+    }
+    .a <- .a + 1
+  }
+  # Free memory
+  rm(.a, .c, .current_dependend)
+}
+
 # Create list for all anwers of all independend survey variables
-answer_list <- list()
+independend_answer_list <- list()
 
 .b <- 1 # Counter for the independend survey variables
 # Get answer values and labels of the independend survey variables
@@ -118,7 +158,7 @@ for (.current_independend in independend_vars) {
   .c <- 1 # Index for detecting start/end of answers
   # Get answer values and labels of the current independend survey variable
   if (independend_types[.b] %in% c("F", "M")) {
-    while (meta[independend_rows[.b] + .c, "class"] == "SQ") ( .c <- .c + 1 )
+    while (meta[independend_rows[.b] + .c, "class"] == "SQ") (.c <- .c + 1)
     # Get all answer values and labels
     while (meta[independend_rows[.b] + .c, "class"] == "A") {
       # Save value and label
@@ -127,7 +167,10 @@ for (.current_independend in independend_vars) {
       .c <- .c + 1
     }
     # Save data frame in list
-    answer_list[[.b]] <- answers
+    independend_answer_list[[.b]] <- answers
+
+    # Free memory
+    rm(.c)
   } else {
     while (meta[independend_rows[.b] + .c, "class"] == "A") {
       # Save value and label
@@ -136,10 +179,11 @@ for (.current_independend in independend_vars) {
       .c <- .c + 1
     }
     # Save data frame in list
-    answer_list[[.b]] <- answers
+    independend_answer_list[[.b]] <- answers
   }
   .b <- .b + 1
 }
 
 # Free memory
-rm(.current_class, .current_row, .el, .i, .row, line_of_title, plan)
+rm(.b, .current_class, .current_independend, .current_row,
+   .el, .i, .row, answers, line_of_title, plan)
