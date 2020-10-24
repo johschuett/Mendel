@@ -3,10 +3,10 @@
 
 # Filter and subset the dataset
 get_subset <- function(dependend, independend, value) {
-  .com <- paste("numbers <- dplyr::filter(data, ", independend, " == ", value, ")", sep = "")
+  .com <- paste("numbers <- dplyr::filter(data, ", dependend, " == ", value, ")", sep = "")
   eval(parse(text = .com))
 
-  .com <- paste("numbers <- numbers$", dependend, sep = "")
+  .com <- paste("numbers <- numbers$", independend, sep = "")
   eval(parse(text = .com))
 
   return(numbers)
@@ -15,9 +15,9 @@ get_subset <- function(dependend, independend, value) {
 ## STATISTICS ##
 
 # Observations
-write_obs <- function(dependend, independend, value) {
+write_obs <- function(dependend, independend, d_value) {
   # Get data
-  numbers <- get_subset(dependend, independend, value)
+  numbers <- get_subset(dependend, independend, d_value)
 
   # Count observations
   result <- length(numbers[!is.na(numbers)])
@@ -29,23 +29,20 @@ write_obs <- function(dependend, independend, value) {
 }
 
 # Percentage
-write_perc <- function(dependend, independend, value) {
+write_perc <- function(dependend, independend, d_value, i_value) {
   # Get data
-  numbers <- get_subset(dependend, independend, value)
-
-  # Get all answer values
-  .index <- which(independend_vars == independend)[[1]]
-  current_values <- answer_list[[.index]]$value
-
-  # Get the amount of observations
-  .com <- paste("obs_value <- filter(data, !is.na(", dependend, ") & ", independend, " %in% current_values)", sep = "")
+  .com <- paste("numbers <- dplyr::filter(data, ", independend, " == ", i_value, ")", sep = "")
   eval(parse(text = .com))
 
-  .com <- paste("obs_value <- length(obs_value$", dependend,")", sep = "")
+  .com <- paste("numbers <- numbers$", dependend, sep = "")
   eval(parse(text = .com))
 
   # Count observations
-  result <- length(numbers[!is.na(numbers)]) / obs_value * 100
+  total <- length(numbers[!is.na(numbers)])
+  partial <- length(numbers[!is.na(numbers) & numbers == d_value])
+
+  # Calculate percentage
+  result <- partial / total * 100
 
   # Create LaTeX code
   chunk <- paste(" & ", format(round(result, decimal_places_perc), nsmall = decimal_places_perc), sep = "")
