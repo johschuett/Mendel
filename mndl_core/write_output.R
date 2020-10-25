@@ -34,8 +34,8 @@ write("\t\\end{center}\n\n\\end{document}\n\n% This document was generated using
 
 cat("\n#! Building PDF file \U0001F9F1 ...\n\n")
 
-#system("pdflatex twoway.tex")
-#system("rm *.aux *log")
+system("pdflatex twoway.tex")
+system("rm *.aux *log")
 
 # Free memory
 rm(preamble)

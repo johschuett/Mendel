@@ -22,6 +22,16 @@ write_obs <- function(dependend, independend, d_value) {
   # Count observations
   result <- length(numbers[!is.na(numbers)])
 
+  # Get position of the independend survey variable in the totals list
+  .b <- which(independend_vars == independend)
+
+  # Store result in the data frame inside the totals list
+  .answer_row[length(.answer_row) + 1] <<- result
+  totals[[.b]] <<- rbind.data.frame(totals[[.b]], .answer_row)
+
+  # Clear the row vector, for observations is the last column in each row
+  .answer_row <<- c()
+
   # Create LaTeX code
   chunk <- paste(" & ", format(result, nsmall = decimal_places), sep = "")
 
@@ -43,6 +53,9 @@ write_perc <- function(dependend, independend, d_value, i_value) {
 
   # Calculate percentage
   result <- partial / total * 100
+
+  # Store result in the total vector
+  .answer_row[length(.answer_row) + 1] <<- round(result, decimal_places_perc)
 
   # Create LaTeX code
   chunk <- paste(" & ", format(round(result, decimal_places_perc), nsmall = decimal_places_perc), sep = "")

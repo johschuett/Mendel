@@ -10,6 +10,11 @@ for (.current_answers in independend_answer_list) {
 # Vector for the sections of the twoway table
 # (every dependend survey variable makes one section)
 sections <- c()
+# Create list for the results of the twoway table
+# (necessary for the calculation of the totals)
+totals <- list()
+# Create empty vector for totals
+.answer_row <- c()
 
 .a <- 1 # Counter for dependend survey variables
 # Iterate through the dependend survey variables
@@ -20,6 +25,19 @@ for (.current_dependend in dependend_vars) {
     .current_d_label <- .current_dependend
   else
     .current_d_label <- dependend_labels[.a]
+
+  .b <- 1 # Counter for independend survey variables
+  # Create data frames in totals list
+  for (.current_independend in independend_vars) {
+    # Create empty data frame for totals
+    totals[[.b]] <- data.frame()
+    # Create (empty) columns of data frame
+    for (.current_i_value in independend_answer_list[[.b]]$value)
+      totals[[.b]] <- cbind.data.frame(totals[[.b]], integer(0))
+    # Last column is for observations
+    totals[[.b]] <- cbind.data.frame(totals[[.b]], integer(0))
+    .b <- .b + 1
+  }
 
   # String for LaTeX code of the current section of the twoway table; write Q/SQ label
   pack <- paste("\t\t\t\\multicolumn{", columns, "}{l}{", .current_d_label, "} \\\\\n", sep = "")
@@ -49,8 +67,13 @@ for (.current_dependend in dependend_vars) {
     # End row
     pack <- paste(pack, " \\\\\n", sep = "")
   }
-  # Totals
+  # Write totals
   pack <- paste(pack, "\t\t\tTotal ", sep = "")
+  for (.b in seq_len(length(independend_vars))) {
+    for (.c in seq_len(length(independend_answer_list[[.b]]$value)))
+      pack <- paste(pack, " & ", sum(totals[[.b]][, .c]), sep = "")
+    pack <- paste(pack, " & ", sum(totals[[.b]][, ncol(totals[[.b]])]), sep = "")
+  }
 
   # End row
   pack <- paste(pack, " \\\\\n", sep = "")
@@ -179,4 +202,9 @@ for (.section in sections)
 twoway_table <- paste(twoway_table,"\n\t\t\\end{xtabular}\n", sep = "")
 
 # Free memory
-rm(.a, .current_answers, .current_dependend)
+rm(.a, .answer_row, .answers, .b, .c, .current_answer, .current_answers, .current_dependend,
+   .current_d_label, .current_d_value, .current_dv_label, .current_i_label, .current_i_value,
+   .current_independend, .current_iv_label, .current_length, .independend_width, .row, .section,
+   .total_length, answer_collection, columns, dependend_answer_list, headstructure,
+   independend_answer_list, longest_string, pack, sections, tablefirsthead, tablehead, totals,
+   xtab_columns)
