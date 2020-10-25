@@ -25,11 +25,11 @@ write_obs <- function(dependend, independend, d_value) {
   # Get position of the independend survey variable in the totals list
   .b <- which(independend_vars == independend)
 
-  # Store result in the data frame inside the totals list
+  # Store result in the assigned data frame inside the totals list
   .answer_row[length(.answer_row) + 1] <<- result
   totals[[.b]] <<- rbind.data.frame(totals[[.b]], .answer_row)
 
-  # Clear the row vector, for observations is the last column in each row
+  # Clear row vector for "observations" is the last column in each row
   .answer_row <<- c()
 
   # Create LaTeX code
@@ -38,7 +38,7 @@ write_obs <- function(dependend, independend, d_value) {
   return(chunk)
 }
 
-# Percentage
+# Percentages
 write_perc <- function(dependend, independend, d_value, i_value) {
   # Get data
   .com <- paste("numbers <- dplyr::filter(data, ", independend, " == ", i_value, ")", sep = "")

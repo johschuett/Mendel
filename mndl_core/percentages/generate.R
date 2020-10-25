@@ -1,7 +1,7 @@
 # generate.R - percentages
 # This script generates the LaTeX code for the twoway table
 
-columns <- 1
+columns <- 1 # First column is for the dependend survey variable labels
 # Amount of columns of the twoway table
 for (.current_answers in independend_answer_list) {
   columns <- columns + length(.current_answers$value) + 1
@@ -64,9 +64,11 @@ for (.current_dependend in dependend_vars) {
       pack <- paste(pack, write_obs(.current_dependend, .current_independend, .current_d_value), sep = "")
       .b <- .b + 1
     }
+
     # End row
     pack <- paste(pack, " \\\\\n", sep = "")
   }
+  
   # Write totals
   pack <- paste(pack, "\t\t\tTotal ", sep = "")
   for (.b in seq_len(length(independend_vars))) {
