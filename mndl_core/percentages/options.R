@@ -36,34 +36,6 @@ if ("options" %in% ls()) {
   if ("caption" %!in% options$option) {
     caption <- ""
 
-    # Check amount of independend survey variables
-    if (length(independend_labels) > 1) {
-        .b <- 1 # Counter for independend variables
-        for (.current_ind_label in independend_labels) {
-          # Replace label with variable name if empty
-          if (is_empty(.current_ind_label, na.ignore = TRUE))
-            .current_ind_label <- independend_vars[.b]
-
-          if (.b == length(independend_labels))
-            caption <- paste(caption, "and ``", .current_ind_label, "'' ", sep = "")
-          else if (.b == length(independend_labels) - 1)
-            caption <- paste(caption, "``", .current_ind_label, "'' ", sep = "")
-          else
-            caption <- paste(caption, "``", .current_ind_label, "'', ", sep = "")
-          .b <- .b + 1
-        }
-    } else {
-      # Replace label with variable name if empty
-      if (is_empty(independend_labels[1], na.ignore = TRUE))
-        .current_ind_label <- independend_vars[1]
-      else
-        .current_ind_label <- independend_labels[1]
-
-      caption <- paste(caption, "``", .current_ind_label, "'' ", sep = "")
-    }
-
-    caption <- paste(caption, "over ", sep = "")
-
     # Check amount of dependend survery variables
     if (length(dependend_labels) > 1) {
       .a <- 1 # Counter for dependend labels
@@ -73,7 +45,7 @@ if ("options" %in% ls()) {
           .current_d_label <- dependend_vars[.a]
 
         if (.a == length(dependend_labels))
-          caption <- paste(caption, "and ``", .current_d_label, "''.", sep = "")
+          caption <- paste(caption, "and ``", .current_d_label, "'' ", sep = "")
         else if (.a == length(dependend_labels) - 1)
           caption <- paste(caption, "``", .current_d_label, "'' ", sep = "")
         else
@@ -87,7 +59,35 @@ if ("options" %in% ls()) {
       else
         .current_d_label <- dependend_labels[1]
 
-      caption <- paste(caption, "``", .current_d_label, "''.", sep = "")
+      caption <- paste(caption, "``", .current_d_label, "'' ", sep = "")
+    }
+
+    caption <- paste(caption, "over ", sep = "")
+
+    # Check amount of independend survey variables
+    if (length(independend_labels) > 1) {
+        .b <- 1 # Counter for independend variables
+        for (.current_ind_label in independend_labels) {
+          # Replace label with variable name if empty
+          if (is_empty(.current_ind_label, na.ignore = TRUE))
+            .current_ind_label <- independend_vars[.b]
+
+          if (.b == length(independend_labels))
+            caption <- paste(caption, "and ``", .current_ind_label, "''.", sep = "")
+          else if (.b == length(independend_labels) - 1)
+            caption <- paste(caption, "``", .current_ind_label, "'' ", sep = "")
+          else
+            caption <- paste(caption, "``", .current_ind_label, "'', ", sep = "")
+          .b <- .b + 1
+        }
+    } else {
+      # Replace label with variable name if empty
+      if (is_empty(independend_labels[1], na.ignore = TRUE))
+        .current_ind_label <- independend_vars[1]
+      else
+        .current_ind_label <- independend_labels[1]
+
+      caption <- paste(caption, "``", .current_ind_label, "''.", sep = "")
     }
   }
 
