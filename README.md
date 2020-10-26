@@ -1,7 +1,3 @@
-<img src="extras/icon.png" height="90px" style="float: right;" alt="Logo"/>
-
-<br />
-
 ## Mendel
 
 <a href="https://cran.r-project.org/">
