@@ -6,7 +6,7 @@
 ci_level            <- 0.05
 decimal_places      <- 2
 decimal_places_perc <- 0
-statistical_values  <- c("obs", "med", "mean", "sd")
+statistical_values  <- "obs,med,mean,sd"
 # Available statistical values:
 # obs, med, ptiles, mean, sd, ci, min, max, mode, perc
 #-------------------------------------------------------------
