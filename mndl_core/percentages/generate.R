@@ -68,7 +68,7 @@ for (.current_dependend in dependend_vars) {
     # End row
     pack <- paste(pack, " \\\\\n", sep = "")
   }
-  
+
   # Write totals
   pack <- paste(pack, "\t\t\tTotal ", sep = "")
   for (.b in seq_len(length(independend_vars))) {
@@ -136,7 +136,7 @@ for (.a in seq_len(length(independend_labels))) {
     # Insert label for current statistical value
     headstructure <- paste(headstructure, " & \\parbox{15mm}{\\centering ", .current_iv_label, "}", sep = "")
   }
-  headstructure <- paste(headstructure, "& \\mc{}", sep = "")
+  headstructure <- paste(headstructure, " & \\mc{}", sep = "")
 }
 
 # End row
