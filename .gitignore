@@ -60,3 +60,4 @@ input/corona
 *.aux
 *.log
 *.synctex.gz
+*.pdf
