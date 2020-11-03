@@ -27,11 +27,11 @@
 
 <br/>
 
-<a href="extras/examples/kksoep_03.tex">
-  <center>
+<p align="center">
+  <a href="extras/examples/kksoep_03.tex">
     <img src="ressources/screenshot_01.png" alt="Screenshot" style="width: 100%;"/>
-  </center>
-</a>
+  </a>
+</p>
 
 <br/><br/>
 
