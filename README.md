@@ -25,18 +25,22 @@
 ##### Author: Johannes Schütt, Claudia Saalbach
 ##### [Chair of Empirical Social Research Methods, University of Potsdam](https://uni-potsdam.de/soziologie-methoden)
 
-<div style="height: 20px;"><!-- Placeholder --></div>
+<br/>
 
 <a href="extras/examples/kksoep_03.tex">
-  <img src="ressources/screenshot_01.png" alt="Screenshot" style="width: 100%;"/>
+  <center>
+    <img src="ressources/screenshot_01.png" alt="Screenshot" style="width: 100%;"/>
+  </center>
 </a>
 
-<div style="height: 60px;"><!-- Placeholder --></div>
+<br/><br/>
 
 Mendel generates twoway tables of metric or categorical variables of a survey response dataset. A user interface allows the selection of dependent and independent variables. Mendel delivers the twoway tables as TeX and PDF files.
 
-<div style="height: 60px;"><!-- Placeholder --></div>
-
+<!--
 <a href="extras/examples/kksoep_04.tex">
-  <img src="ressources/screenshot_03.png" alt="Screenshot" style="width: 100%;"/>
+  <center>
+    <img src="ressources/screenshot_03.png" alt="Screenshot" style="width: 100%;"/>
+  </center>
 </a>
+-->
