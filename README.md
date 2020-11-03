@@ -33,6 +33,8 @@
   </a>
 </p>
 
+<p align="center">This example can be found <a href="extras/examples/kksoep_03.tex">here</a>.</p>
+
 <br/>
 
 ### Summary
