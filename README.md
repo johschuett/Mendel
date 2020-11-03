@@ -26,8 +26,10 @@
   </a>
 </p>
 
-##### Author: Johannes Schütt, Claudia Saalbach
-##### [Chair of Empirical Social Research Methods, University of Potsdam](https://uni-potsdam.de/soziologie-methoden)
+<h5 align="center">Author: Johannes Schütt, Claudia Saalbach</h5>
+
+<a href="https://uni-potsdam.de/soziologie-methoden" target="_blank"><h5 align="center">Chair of Empirical Social Research Methods, University of Potsdam</h5></a>
+
 
 <br/>
 
