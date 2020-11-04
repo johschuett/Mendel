@@ -35,22 +35,14 @@
 
 <p align="center">
   <a href="extras/examples/kksoep_03.tex">
-    <img src="ressources/screenshot_01.png" alt="Screenshot" style="width: 100%;"/>
+    <img src="resources/screenshots/screenshot_01.png" alt="Screenshot" style="width: 100%;"/>
   </a>
 </p>
 
-<p align="center">This example can be found <a href="extras/examples/kksoep_03.tex">here</a>.</p>
+<p align="center">This example can be found <a href="resources/examples/kksoep_03.tex">here</a>.</p>
 
 <br/>
 
-### Summary
+### About
 
 Mendel generates twoway tables of metric or categorical variables of a survey response dataset. A user interface allows the selection of dependent and independent variables. Mendel delivers the twoway tables as TeX and PDF files.
-
-<!--
-<a href="extras/examples/kksoep_04.tex">
-  <center>
-    <img src="ressources/screenshot_03.png" alt="Screenshot" style="width: 100%;"/>
-  </center>
-</a>
--->
