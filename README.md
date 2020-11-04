@@ -34,7 +34,7 @@
 <br/>
 
 <p align="center">
-  <a href="extras/examples/kksoep_03.tex">
+  <a href="resources/examples/kksoep_03.tex">
     <img src="resources/screenshots/screenshot_01.png" alt="Screenshot" style="width: 100%;"/>
   </a>
 </p>
