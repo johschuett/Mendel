@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="100px" src="resources/icon.png"/>  
+  <img height="100px" src="etc/icon.png" alt="Logo"/>  
 </p>
 
 <p align="center">
@@ -34,12 +34,12 @@
 <br/>
 
 <p align="center">
-  <a href="resources/examples/kksoep_03.tex">
-    <img src="resources/screenshots/screenshot_01.png" alt="Screenshot" style="width: 100%;"/>
+  <a href="etc/examples/kksoep_03.tex">
+    <img src="etc/screenshots/screenshot_01.png" alt="Screenshot" style="width: 100%;"/>
   </a>
 </p>
 
-<p align="center">This example can be found <a href="resources/examples/kksoep_03.tex">here</a>.</p>
+<p align="center">This example can be found <a href="etc/examples/kksoep_03.tex">here</a>.</p>
 
 <br/>
 
