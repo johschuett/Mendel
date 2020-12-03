@@ -33,7 +33,7 @@
   </a>
 </p>
 
-<p align="center">This example can be found <a href="etc/examples/kksoep_03.tex">here</a>.</p>
+<p align="center">This example can be found <a href="https://gist.github.com/johschuett/b2f901b95fbcabb89320a3a7b6b2f12b#file-kksoep_03-tex">here</a>.</p>
 
 <br/>
 
