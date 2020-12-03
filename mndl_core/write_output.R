@@ -25,17 +25,18 @@ preamble <- paste("\\documentclass[10pt, twoside]{article}
 
 \t%\\maketitle", sep = "")
 
-write(preamble, file = "twoway.tex", append = FALSE)
+output_name <- paste("report_", ticket, ".tex", sep = "")
+
+write(preamble, file = output_name, append = FALSE)
 
 # Write code
-write(twoway_table, file = "twoway.tex", append = TRUE)
+write(twoway_table, file = output_name, append = TRUE)
 
-write("\t\\end{center}\n\n\\end{document}\n\n% This document was generated using Mendel.", file = "twoway.tex", append = TRUE)
+write("\t\\end{center}\n\n\\end{document}\n\n% This document was generated using Mendel.", file = output_name, append = TRUE)
 
-cat("\n#! Building PDF file \U0001F9F1 ...\n\n")
-
-system("pdflatex twoway.tex")
+.syscom <- paste("pdflatex ", output_name, sep = "")
+system(.syscom)
 system("rm *.aux *log")
 
 # Free memory
-rm(preamble)
+rm(.syscom, preamble)

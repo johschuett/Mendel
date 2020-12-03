@@ -1,13 +1,5 @@
 # import.R
-# This script imports the data from the CSV files and sorts them
-
-# Import data from file
-data <- rio::import("input/data.csv", encoding = "UTF-8")
-# Import metadata and the twoway table plan from files
-meta <- rio::import("input/meta.csv", encoding = "UTF-8")
-plan <- rio::import("input/plan.csv", encoding = "UTF-8")
-# Import options file if it exists
-if (file.exists("input/options.csv")) (options <- rio::import("input/options.csv", encoding = "UTF-8"))
+# This script imports the data and sorts it
 
 # Get survey title
 line_of_title <- which(meta$name == "surveyls_title")
@@ -18,18 +10,6 @@ if (is.integer(line_of_title) && length(line_of_title) == 0L) {
   survey_title <- meta[line_of_title[1], "text"]
 } else {
   survey_title <- meta[line_of_title, "text"]
-}
-
-# Sort the survey variables
-dependend_vars <- c()
-independend_vars <- c()
-
-for (.row in seq_len(nrow(plan))) {
-  if (!is_empty(plan[.row, "dependend"]))
-    dependend_vars[length(dependend_vars) + 1] <- plan[.row, "dependend"]
-
-  if (!is_empty(plan[.row, "independend"]))
-    independend_vars[length(independend_vars) + 1] <- plan[.row, "independend"]
 }
 
 # Create new dataset containing only the dependend and independend survey variables
@@ -186,4 +166,4 @@ for (.current_independend in independend_vars) {
 
 # Free memory
 rm(.b, .current_class, .current_independend, .current_row,
-   .el, .i, .row, answers, line_of_title, plan)
+   .el, .i, .row, answers, line_of_title)

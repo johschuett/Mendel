@@ -26,18 +26,10 @@ is_empty <- function(x, na.ignore = FALSE) {
 # Define %!in% operator
 '%!in%' <- function(x, y)!('%in%'(x, y))
 
-# Get the table type ("means" or "percentages")
-# from file (only read first line)
-connection <- file("input/type.txt", "r")
-table_type <- readLines(connection, n = 1, warn = FALSE)
-close(connection)
-
-# Manipulate string (tolower and remove spaces)
-table_type <- tolower(trimws(table_type))
+# Get data from job file
+source("mndl_core/prepare_job.R")
 
 if (table_type == "means") {
-
-  cat("\n#! Generating TEX file \U0001F529 ...\n\n")
 
   # Scripts
   source("mndl_core/import.R")
@@ -47,8 +39,6 @@ if (table_type == "means") {
   source("mndl_core/write_output.R")
 
 } else if (table_type == "percentages") {
-
-  cat("\n#! Generating TEX file \U0001F529 ...\n\n")
 
   # Scripts
   source("mndl_core/import.R")
@@ -62,6 +52,3 @@ if (table_type == "means") {
   cat("#! Unknown table type!")
 
 }
-
-# Free memory
-rm(connection)

@@ -45,9 +45,9 @@ if ("options" %in% ls()) {
   # Remove all whitespaces from statistical_values
   # and convert to lower space, then split the string;
   # every value can only occur once
-  statistical_values <- tolower(gsub(" ", "", statistical_values))
-  statistical_values <- strsplit(statistical_values, ",", fixed = TRUE)
-  statistical_values <- unique(statistical_values[[1]])
+  statistical_values <- tolower(trimws(statistical_values))
+  statistical_values <- unlist(strsplit(statistical_values, ",", fixed = TRUE))
+  statistical_values <- unique(statistical_values)
 
   # Generate standard caption
   if ("caption" %!in% options$option) {
@@ -111,7 +111,7 @@ if ("options" %in% ls()) {
   # Special standard footer if percentages occur as statistical values
   if ("footer" %!in% options$option && "perc" %in% statistical_values)
     footer <- "Note: Percentages may not add up due to rounding."
-  else
+  else if ("footer" %!in% options$option)
     footer <- ""
 
   # Free memory
