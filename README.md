@@ -11,12 +11,6 @@
     <img src="https://img.shields.io/badge/TeX-3.14-blue" alt="TeX 3.14"/>
   </a>
 
-  <!--
-  <a href="https://en.wikipedia.org/wiki/C%2B%2B17">
-    <img src="https://img.shields.io/badge/C++-17-blue" alt="C++17"/>
-    </a>
-  -->
-
   <a href="GPL-2.0">
     <img src="https://img.shields.io/badge/License-GPL%202.0-yellow" alt="GPL 2.0"/>
   </a>
@@ -34,7 +28,7 @@
 <br/>
 
 <p align="center">
-  <a href="etc/examples/kksoep_03.tex">
+  <a href="https://gist.github.com/johschuett/b2f901b95fbcabb89320a3a7b6b2f12b#file-kksoep_03-tex">
     <img src="etc/screenshots/screenshot_01.png" alt="Screenshot" style="width: 100%;"/>
   </a>
 </p>
