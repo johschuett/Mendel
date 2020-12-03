@@ -46,8 +46,8 @@ if ("options" %in% ls()) {
   # and convert to lower space, then split the string;
   # every value can only occur once
   statistical_values <- tolower(gsub(" ", "", statistical_values))
-  statistical_values <- strsplit(statistical_values, ",", fixed = TRUE)
-  statistical_values <- unique(statistical_values[[1]])
+  statistical_values <- unlist(strsplit(statistical_values, ",", fixed = TRUE))
+  statistical_values <- unique(statistical_values)
 
   # Generate standard caption
   if ("caption" %!in% options$option) {
