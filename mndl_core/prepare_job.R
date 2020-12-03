@@ -10,8 +10,8 @@ table_type <- dplyr::filter(job, key == "table_type")$value[1]
 # Import metadata and the twoway table plan
 meta <- rio::import(dplyr::filter(job, key == "meta_file")$value[1], encoding = "UTF-8")
 # Import dependend and independend variables
-dependend_vars = unlist(strsplit(dplyr::filter(job, key == "dependend_vars")$value, ",", fixed = TRUE))
-independend_vars = unlist(strsplit(dplyr::filter(job, key == "independend_vars")$value, ",", fixed = TRUE))
+dependend_vars <- unlist(strsplit(dplyr::filter(job, key == "dependend_vars")$value, ",", fixed = TRUE))
+independend_vars <- unlist(strsplit(dplyr::filter(job, key == "independend_vars")$value, ",", fixed = TRUE))
 
 # Create (empty) data frame for options
 options <- data.frame(option = integer(0), value = integer(0))

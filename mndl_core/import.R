@@ -148,9 +148,6 @@ for (.current_independend in independend_vars) {
     }
     # Save data frame in list
     independend_answer_list[[.b]] <- answers
-
-    # Free memory
-    rm(.c)
   } else {
     while (meta[independend_rows[.b] + .c, "class"] == "A") {
       # Save value and label
@@ -165,5 +162,5 @@ for (.current_independend in independend_vars) {
 }
 
 # Free memory
-rm(.b, .current_class, .current_independend, .current_row,
+rm(.b, .c, .current_class, .current_independend, .current_row,
    .el, .i, .row, answers, line_of_title)
