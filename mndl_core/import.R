@@ -161,6 +161,12 @@ for (.current_independend in independend_vars) {
   .b <- .b + 1
 }
 
+# Delete this object, if it exists. Necessary for the landscape option in
+# write_output.R where we need to check whether this variable was created
+# by the script in means/options.R.
+if(exists("statistical_values"))
+  rm(statistical_values)
+
 # Free memory
 rm(.b, .c, .current_class, .current_independend, .current_row,
    .el, .i, .row, answers, line_of_title)

@@ -1,10 +1,26 @@
 # write_output.R
 # This script writes the LaTeX code into a TEX file
 
-preamble <- paste("\\documentclass[10pt, twoside]{article}
+# Landscape option if means table has more than 5 statistical values
+if(exists("statistical_values")) {
+  # Means table
+  if(length(statistical_values) > 5L) {
+    # More than 5 statistical values
+    landscape <- ", landscape"
+    note <- ""
+  } else {
+    # Not more than 5 statistical values
+    landscape <- ""
+    note <- "\n% You can try the 'landscape' option for the documentclass if your table is too wide.\n"
+  }
+} else {
+  # Percentages table
+  landscape <- ""
+  note <- "\n% You can try the 'landscape' option for the documentclass if your table is too wide.\n"
+}
 
-% You can try the 'landscape' option for the documentclass if your table is too wide.
-
+preamble <- paste("\\documentclass[10pt, twoside", landscape, "]{article}
+", note, "
 \\usepackage[T1]{fontenc}
 \\usepackage[utf8]{inputenc}
 \\usepackage[english]{babel}
@@ -39,4 +55,4 @@ system(.syscom)
 system("rm *.aux *log")
 
 # Free memory
-rm(.syscom, preamble)
+rm(.syscom, landscape, note, preamble)
