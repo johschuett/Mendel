@@ -6,20 +6,23 @@ if(exists("statistical_values")) {
   # Means table
   if(length(statistical_values) > 5L) {
     # More than 5 statistical values
-    landscape <- ", landscape"
+    pdflscape <- "\n\\usepackage{pdflscape}\n"
+    landscape <- c("\n\n\t\\begin{landscape}", "\n\n\t\\end{landscape}")
     note <- ""
   } else {
     # Not more than 5 statistical values
-    landscape <- ""
-    note <- "\n% You can try the 'landscape' option for the documentclass if your table is too wide.\n"
+    pdflscape <- ""
+    landscape <- c("", "")
+    note <- "\n% You can try the 'landscape' option for the documentclass\n% or the 'landscape' environment of the 'pdflscape' package if your table is too wide.\n"
   }
 } else {
   # Percentages table
-  landscape <- ""
-  note <- "\n% You can try the 'landscape' option for the documentclass if your table is too wide.\n"
+  pdflscape <- ""
+  landscape <- c("", "")
+  note <- "\n% You can try the 'landscape' option for the documentclass\n% or the 'landscape' environment of the 'pdflscape' package if your table is too wide.\n"
 }
 
-preamble <- paste("\\documentclass[10pt, twoside", landscape, "]{article}
+preamble <- paste("\\documentclass[10pt, twoside]{article}
 ", note, "
 \\usepackage[T1]{fontenc}
 \\usepackage[utf8]{inputenc}
@@ -29,12 +32,12 @@ preamble <- paste("\\documentclass[10pt, twoside", landscape, "]{article}
 \\usepackage{caption}
 \\usepackage{float}
 \\usepackage[left = .2in, right = .2in, top = 1in, bottom = 1in]{geometry}
-\\usepackage{multirow}
+\\usepackage{multirow}", pdflscape, "
 \\usepackage{xtab}
 
 \\newcommand{\\mc}[1]{\\multicolumn{1}{c}{#1}}
 
-\\begin{document}
+\\begin{document}", landscape[1], "
 
 \t\\title{", survey_title, "}
 \t\\date{}
@@ -48,11 +51,17 @@ write(preamble, file = output_name, append = FALSE)
 # Write code
 write(twoway_table, file = output_name, append = TRUE)
 
-write("\t\\end{center}\n\n\\end{document}\n\n% This document was generated using Mendel.", file = output_name, append = TRUE)
+end <- paste("\t\\end{center}", landscape[2], "
+
+\\end{document}
+
+% This document was generated using Mendel.", sep = "")
+
+write(end, file = output_name, append = TRUE)
 
 .syscom <- paste("pdflatex ", output_name, sep = "")
 system(.syscom)
 system("rm *.aux *log")
 
 # Free memory
-rm(.syscom, landscape, note, preamble)
+rm(.syscom, landscape, note, pdflscape, preamble)
