@@ -55,10 +55,14 @@ write_perc <- function(dependend, independend, d_value, i_value) {
   result <- partial / total * 100
 
   # Store result in the total vector
-  .answer_row[length(.answer_row) + 1] <<- round(result, decimal_places_perc)
+  .answer_row[length(.answer_row) + 1] <<- result
+
+  ifelse(is.nan(result),
+         result <- "-",
+         result <- format(round(result, decimal_places_perc), nsmall = decimal_places_perc))
 
   # Create LaTeX code
-  chunk <- paste(" & ", format(round(result, decimal_places_perc), nsmall = decimal_places_perc), sep = "")
+  chunk <- paste(" & ", result, sep = "")
 
   return(chunk)
 }

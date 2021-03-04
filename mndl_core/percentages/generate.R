@@ -72,8 +72,12 @@ for (.current_dependend in dependend_vars) {
   # Write totals
   pack <- paste(pack, "\t\t\tTotal ", sep = "")
   for (.b in seq_len(length(independend_vars))) {
-    for (.c in seq_len(length(independend_answer_list[[.b]]$value)))
-      pack <- paste(pack, " & ", sum(totals[[.b]][, .c]), sep = "")
+    for (.c in seq_len(length(independend_answer_list[[.b]]$value))) {
+      .current_total <- sum(totals[[.b]][, .c])
+      if (is.nan(.current_total))
+        .current_total <- "-"
+     pack <- paste(pack, " & ", .current_total, sep = "") 
+    }
     pack <- paste(pack, " & ", sum(totals[[.b]][, ncol(totals[[.b]])]), sep = "")
   }
 
@@ -206,7 +210,7 @@ twoway_table <- paste(twoway_table,"\n\t\t\\end{xtabular}\n", sep = "")
 # Free memory
 rm(.a, .answer_row, .answers, .b, .c, .current_answer, .current_answers, .current_dependend,
    .current_d_label, .current_d_value, .current_dv_label, .current_i_label, .current_i_value,
-   .current_independend, .current_iv_label, .current_length, .independend_width, .row, .section,
-   .total_length, answer_collection, columns, dependend_answer_list, headstructure,
+   .current_independend, .current_iv_label, .current_length, .current_total, .independend_width,
+   .row, .section, .total_length, answer_collection, columns, dependend_answer_list, headstructure,
    independend_answer_list, longest_string, pack, sections, tablefirsthead, tablehead, totals,
    xtab_columns)
