@@ -39,4 +39,4 @@
 
 ### About
 
-Mendel generates fully labeled twoway tables of metric or categorical variables of a survey response dataset. After uploading the metadata of the questionnaire and the response dataset, a user interface allows to choose the dependent and independent variables and the statistics you want to present in your table. Mendel delivers the twoway tables as TEX and PDF files.
+Mendel generates twoway tables of metric or categorical variables of a survey response dataset. A user interface allows the selection of dependent and independent variables. Mendel delivers the twoway tables as TeX and PDF files.
